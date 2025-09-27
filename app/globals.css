@@ -1,26 +1,115 @@
+/* app/globals.css */
+
+/* Tailwind v4 */
 @import "tailwindcss";
 
+/* ── Design tokens (dark default) ───────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Surfaces & text */
+  --bg: #000000;
+  --panel: #141619;
+  --text: #e7e7e7;
+  --muted: #b8b8b8;
+
+  /* Brand (Pantone 7472C approximation) */
+  --accent: #57B6B2;
+  --accent-hover: #2bb5a9;
+  --accent-active: #239087;
+
+  /* Nav defaults (dark) */
+  --nav-fg: #e5e7eb;     /* zinc-200 */
+  --nav-fg-hover: #ffffff;
+  --nav-underline: rgba(255,255,255,0.7);
+
+  /* Footer defaults (dark) */
+  --footer-fg: #a1a1aa;  /* zinc-400 */
+  --footer-heading: #ffffff;
+  --footer-border: rgba(255,255,255,0.10);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* Light theme overrides */
+html.light {
+  --bg: #ffffff;
+  --panel: #f7f7f9;
+  --text: #111111;       /* strong base on light */
+  --muted: #3f3f46;      /* zinc-600 → readable */
+
+  /* Gold accent for light mode (approx) */
+  --accent: #D4AF37;
+  --accent-hover: #c49c31;
+  --accent-active: #a88428;
+
+  /* Nav (light) */
+  --nav-fg: #0f172a;         /* slate-900 */
+  --nav-fg-hover: #0b1220;   /* slightly darker on hover */
+  --nav-underline: rgba(15,23,42,0.55); /* slate-900 @~55% */
+
+  /* Footer (light) */
+  --footer-fg: #374151;      /* slate-700 */
+  --footer-heading: #0f172a; /* slate-900 */
+  --footer-border: rgba(2,6,23,0.08);  /* slate-950 ~8% */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Hint UA palette for form controls, etc. */
+html { color-scheme: dark; }
+html.light { color-scheme: light; }
+
+/* ── Global base ────────────────────────────────────────────── */
+html, body {
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+}
+
+/* Accessible focus outline */
+:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--accent) 80%, white 20%);
+  outline-offset: 2px;
+}
+
+/* ── Helper utilities (optional) ───────────────────────────── */
+/* Theme-aware text helpers if/when you need to force clarity */
+.t-fg-base   { color: var(--text) !important; }
+.t-fg-muted  { color: var(--muted) !important; }
+.t-fg-accent { color: var(--accent) !important; }
+
+/* Nav helpers (used by header) */
+.t-nav       { color: var(--nav-fg) !important; }
+.t-nav:hover,
+.t-nav:focus { color: var(--nav-fg-hover) !important; }
+
+/* Subtle card shadow used in the mega menu */
+.shadow-mega {
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Hairline separators that look good on both themes */
+.hr-soft {
+  height: 1px;
+  width: 100%;
+  background: color-mix(in oklab, var(--text) 12%, transparent);
+}
+.hr-soft-gradient {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in oklab, var(--text) 20%, transparent),
+    transparent
+  );
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+/* Smooth scroll fallback */
+html { scroll-behavior: smooth; }

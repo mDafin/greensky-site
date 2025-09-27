@@ -1,20 +1,23 @@
+// components/nav/MegaNavBlackstoneClone.tsx
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import clsx from "clsx";
+import type { Route } from "next";
+
 import SearchButton from "@/components/nav/SearchButton";
 import ThemeToggle from "@/components/nav/ThemeToggle";
-import clsx from "clsx";
+import Brand from "@/components/nav/Brand";
 
-type LinkItem = { label: string; href: string };
+type LinkItem = { label: string; href: string }; // can be internal or external (we’ll narrow at render)
+
 type Column =
   | { title: string; links: LinkItem[]; promo?: false }
   | { promo: true; title: string; text: string; cta?: LinkItem; image?: string };
 
-const navData: {
-  id: string;
-  label: string;
-  columns: Column[];
-}[] = [
+const navData: { id: string; label: string; columns: Column[] }[] = [
   {
     id: "firm",
     label: "The Firm",
@@ -67,8 +70,8 @@ const navData: {
       {
         title: "Transformation",
         links: [
-          { label: "Operating Team", href: "/transformation/operating-team" },
           { label: "Technology & Innovation", href: "/transformation/tech" },
+          { label: "Operating Team", href: "/transformation/operating-team" },
         ],
       },
       {
@@ -155,8 +158,8 @@ const navData: {
   },
 ];
 
-function useOnClickOutside(
-  ref: React.RefObject<HTMLElement>,
+function useOnClickOutside<T extends HTMLElement>(
+  ref: React.RefObject<T | null>,
   handler: (e: MouseEvent | TouchEvent) => void
 ) {
   useEffect(() => {
@@ -173,13 +176,18 @@ function useOnClickOutside(
   }, [ref, handler]);
 }
 
-export default function MegaNavBlackstoneClone() {
+const isExternal = (href: string) =>
+  href.startsWith("http://") ||
+  href.startsWith("https://") ||
+  href.startsWith("mailto:") ||
+  href.startsWith("tel:");
+
+export default function MegaNavBlackstoneClone({ compact = false }: { compact?: boolean }) {
   const [openId, setOpenId] = useState<string | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const navRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement | null>(null);
   useOnClickOutside(navRef, () => setOpenId(null));
 
-  // Esc closes
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -192,112 +200,161 @@ export default function MegaNavBlackstoneClone() {
   }, []);
 
   return (
-    <div ref={navRef} className="w-full bg-black text-white">
-      <div className="mx-auto max-w-7xl px-4 lg:px-6">
-        <div className="flex h-16 items-center justify-between gap-4">
-          {/* Left: Logo */}
-          <a href="/" className="shrink-0">
-            <img src="/logo.svg" alt="Green Sky Management" className="h-7 w-auto" />
-          </a>
+    <div ref={navRef} className="w-full text-white">
+      <div className="mx-auto max-w-[1200px] px-4 lg:px-6">
+        {/* Bar */}
+        <div className={clsx("flex items-center", compact ? "h-14 lg:h-[60px]" : "h-16 lg:h-[68px]")}>
+          {/* Left: Brand */}
+          <div className="shrink-0">
+            <Brand height={compact ? 26 : 28} />
+          </div>
 
-          {/* Desktop primary nav */}
-          <nav aria-label="Primary" className="hidden lg:flex items-center gap-6">
-            {navData.map((item) => (
-              <div key={item.id} className="relative">
-                <button
-                  className={clsx(
-                    "px-2 py-1 text-sm tracking-wide hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-white/40",
-                    openId === item.id && "opacity-100"
-                  )}
-                  aria-expanded={openId === item.id}
-                  aria-controls={`panel-${item.id}`}
-                  onMouseEnter={() => setOpenId(item.id)}
-                  onFocus={() => setOpenId(item.id)}
-                  onClick={() => setOpenId((v) => (v === item.id ? null : item.id))}
-                >
-                  <span className="inline-flex items-center gap-1">
-                    {item.label}
-                    <span aria-hidden>▾</span>
-                  </span>
-                </button>
-
-                {/* Mega panel */}
-                {openId === item.id && (
-                  <div
-                    id={`panel-${item.id}`}
-                    onMouseLeave={() => setOpenId(null)}
-                    className="absolute left-1/2 -translate-x-1/2 mt-2 w-[86vw] max-w-6xl rounded-xl border border-white/10 bg-zinc-900/95 shadow-mega backdrop-blur supports-[backdrop-filter]:bg-zinc-900/80"
-                    role="region"
+          {/* RIGHT CLUSTER (nav + actions) */}
+          <div className="ml-auto flex items-center gap-6">
+            {/* Desktop primary nav */}
+            <nav aria-label="Primary" className="hidden lg:flex items-center gap-1">
+              {navData.map((item) => (
+                <div key={item.id} className="relative group">
+                  <button
+                    className={clsx(
+                      "px-3 py-2 text-[12.5px] uppercase tracking-[0.13em] text-zinc-200",
+                      "hover:text-white focus:text-white focus:outline-none",
+                      "relative after:absolute after:left-3 after:right-3 after:-bottom-[3px] after:h-[1px]",
+                      openId === item.id
+                        ? "after:bg-white"
+                        : "after:bg-transparent group-hover:after:bg-white/70 focus:after:bg-white/80",
+                      "transition-[color] duration-150"
+                    )}
+                    aria-expanded={openId === item.id}
+                    aria-controls={`panel-${item.id}`}
+                    onMouseEnter={() => setOpenId(item.id)}
+                    onFocus={() => setOpenId(item.id)}
+                    onClick={() => setOpenId((v) => (v === item.id ? null : item.id))}
                   >
-                    <div className="px-8 py-8">
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {item.columns.map((col, idx) =>
-                          "promo" in col && col.promo ? (
-                            <a
-                              key={idx}
-                              href={col.cta?.href ?? "#"}
-                              className="rounded-lg overflow-hidden border border-white/10 bg-zinc-800/60 hover:bg-zinc-800/80 focus:outline-none focus:ring-2 focus:ring-white/40"
-                            >
-                              <div className="grid grid-cols-5">
+                    <span className="inline-flex items-center gap-2">
+                      {item.label}
+                      <svg
+                        aria-hidden
+                        className={clsx(
+                          "h-[10px] w-[10px] transition-transform",
+                          openId === item.id ? "rotate-180" : "rotate-0"
+                        )}
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                      >
+                        <path d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.18l3.71-2.95a.75.75 0 1 1 .94 1.16l-4.24 3.37a.75.75 0 0 1-.94 0L5.21 8.39a.75.75 0 0 1 .02-1.18z" />
+                      </svg>
+                    </span>
+                  </button>
+
+                  {/* Mega Panel */}
+                  {openId === item.id && (
+                    <div
+                      id={`panel-${item.id}`}
+                      onMouseLeave={() => setOpenId(null)}
+                      className="
+                        z-[60] absolute left-1/2 -translate-x-1/2 mt-3
+                        w-[86vw] max-w-6xl rounded-xl border border-white/10
+                        bg-zinc-900/95 shadow-[0_30px_60px_rgba(0,0,0,0.55)]
+                        backdrop-blur supports-[backdrop-filter]:bg-zinc-900/80
+                      "
+                      role="region"
+                    >
+                      <div className="h-px w-full bg-white/12" />
+                      <div className="px-8 py-8">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                          {item.columns.map((col, idx) =>
+                            "promo" in col && col.promo ? (
+                              <Link
+                                key={idx}
+                                href={(col.cta?.href ?? "#") as Route}
+                                prefetch={false}
+                                className="rounded-lg overflow-hidden border border-white/10 bg-zinc-800/60 hover:bg-zinc-800/80 focus:outline-none focus:ring-2 focus:ring-white/40 grid grid-cols-5"
+                              >
                                 <div className="col-span-3 p-5">
                                   <h5 className="text-white font-semibold">{col.title}</h5>
-                                  <p className="mt-2 text-sm text-zinc-300">{col.text}</p>
-                                  <div className="mt-4 inline-flex items-center gap-2 text-sm">
+                                  <p className="mt-2 text-sm text-zinc-300 leading-relaxed">{col.text}</p>
+                                  <div className="mt-4 inline-flex items-center gap-2 text-sm text-accent">
                                     <span>Learn More</span>
                                     <span aria-hidden>→</span>
                                   </div>
                                 </div>
-                                <div className="col-span-2">
-                                  {col.image && (
-                                    <img alt="" src={col.image} className="h-full w-full object-cover" />
-                                  )}
+                                <div className="col-span-2 relative min-h-36">
+                                  {col.image ? (
+                                    <Image
+                                      src={col.image}
+                                      alt=""
+                                      fill
+                                      sizes="(min-width: 768px) 33vw, 100vw"
+                                      className="object-cover"
+                                    />
+                                  ) : null}
                                 </div>
+                              </Link>
+                            ) : (
+                              <div key={idx}>
+                                {"title" in col && (
+                                  <h4 className="text-[11px] font-medium text-zinc-400 mb-3 uppercase tracking-[0.14em]">
+                                    {col.title}
+                                  </h4>
+                                )}
+                                <ul className="space-y-[7px]">
+                                  {("links" in col ? col.links : []).map((link) => {
+                                    const external = isExternal(link.href);
+                                    return (
+                                      <li key={link.label}>
+                                        {external ? (
+                                          <a
+                                            href={link.href}
+                                            className="text-[14px] leading-[1.35] text-zinc-100 hover:text-white focus:text-white focus:outline-none"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                          >
+                                            {link.label}
+                                          </a>
+                                        ) : (
+                                          <Link
+                                            href={link.href as Route}
+                                            prefetch={false}
+                                            className="text-[14px] leading-[1.35] text-zinc-100 hover:text-white focus:text-white focus:outline-none"
+                                          >
+                                            {link.label}
+                                          </Link>
+                                        )}
+                                      </li>
+                                    );
+                                  })}
+                                </ul>
                               </div>
-                            </a>
-                          ) : (
-                            <div key={idx}>
-                              <h4 className="text-sm font-medium text-zinc-300 mb-3 uppercase tracking-wide">
-                                {("title" in col && col.title) || ""}
-                              </h4>
-                              <ul className="space-y-2">
-                                {("links" in col ? col.links : []).map((link) => (
-                                  <li key={link.label}>
-                                    <a
-                                      href={link.href}
-                                      className="text-zinc-100 hover:text-white focus:text-white focus:outline-none"
-                                    >
-                                      {link.label}
-                                    </a>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )
-                        )}
+                            )
+                          )}
+                        </div>
                       </div>
+                      <div className="h-px w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                     </div>
-                    <div className="h-0.5 w-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-                  </div>
-                )}
+                  )}
+                </div>
+              ))}
+
+              {/* Right side actions */}
+              <div className="pl-3 ml-1 border-l border-white/10 flex items-center gap-2">
+                <SearchButton />
+                <ThemeToggle />
               </div>
-            ))}
+            </nav>
 
-            {/* Right side: Search + Theme toggle */}
-            <SearchButton />
-            <ThemeToggle />
-          </nav>
-
-          {/* Mobile toggles */}
-          <div className="lg:hidden flex items-center gap-2">
-            <SearchButton />
-            <button
-              className="rounded-lg border border-white/15 px-3 py-2 text-sm"
-              aria-expanded={mobileOpen}
-              aria-controls="mobile-menu"
-              onClick={() => setMobileOpen((v) => !v)}
-            >
-              Menu
-            </button>
+            {/* Mobile actions */}
+            <div className="lg:hidden flex items-center gap-2">
+              <SearchButton />
+              <button
+                className="rounded-lg border border-white/15 px-3 py-2 text-sm"
+                aria-expanded={mobileOpen}
+                aria-controls="mobile-menu"
+                onClick={() => setMobileOpen((v) => !v)}
+              >
+                Menu
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -305,33 +362,38 @@ export default function MegaNavBlackstoneClone() {
       {/* Mobile panel */}
       <div
         id="mobile-menu"
-        className={clsx(
-          "lg:hidden border-t border-white/10 bg-zinc-900",
-          mobileOpen ? "block" : "hidden"
-        )}
+        className={clsx("lg:hidden border-t border-white/10 bg-zinc-900", mobileOpen ? "block" : "hidden")}
       >
-        <div className="mx-auto max-w-7xl px-4 py-4 space-y-6">
+        <div className="mx-auto max-w-[1200px] px-4 py-4 space-y-6">
           {navData.map((item) => (
             <details key={item.id} className="group">
               <summary className="list-none cursor-pointer select-none text-base font-medium text-white/90 py-2 flex items-center justify-between">
                 {item.label}
                 <span className="ml-2 transition-transform group-open:rotate-180">▾</span>
               </summary>
+
               <div className="pl-2 pt-2 grid grid-cols-1 gap-6">
                 {item.columns.map((col, idx) =>
                   "promo" in col && col.promo ? null : (
                     <div key={idx}>
-                      {"title" in col && (
-                        <h5 className="text-xs uppercase tracking-wide text-zinc-400 mb-2">{col.title}</h5>
-                      )}
+                      {"title" in col && <h5 className="text-xs uppercase tracking-wide text-zinc-400 mb-2">{col.title}</h5>}
                       <ul className="space-y-2">
-                        {("links" in col ? col.links : []).map((l) => (
-                          <li key={l.label}>
-                            <a className="text-zinc-100" href={l.href}>
-                              {l.label}
-                            </a>
-                          </li>
-                        ))}
+                        {("links" in col ? col.links : []).map((l) => {
+                          const external = isExternal(l.href);
+                          return external ? (
+                            <li key={l.label}>
+                              <a className="text-zinc-100" href={l.href} target="_blank" rel="noopener noreferrer">
+                                {l.label}
+                              </a>
+                            </li>
+                          ) : (
+                            <li key={l.label}>
+                              <Link className="text-zinc-100" href={l.href as Route} prefetch={false}>
+                                {l.label}
+                              </Link>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   )
@@ -341,12 +403,12 @@ export default function MegaNavBlackstoneClone() {
           ))}
 
           <div className="border-t border-white/10 pt-4 flex flex-col gap-3">
-            <a href="/shareholders" className="text-base">
+            <Link href={"/shareholders" as Route} className="text-base" prefetch={false}>
               Shareholders
-            </a>
-            <a href="/lp-login" className="text-base">
+            </Link>
+            <Link href={"/lp-login" as Route} className="text-base" prefetch={false}>
               LP Login
-            </a>
+            </Link>
           </div>
         </div>
       </div>
