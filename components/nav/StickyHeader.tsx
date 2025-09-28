@@ -16,153 +16,157 @@ type Column =
 
 const navData: { id: string; label: string; columns: Column[] }[] = [
   {
-    id: "firm",
-    label: "THE FIRM",
+    id: "platform",
+    label: "PLATFORM",
     columns: [
       {
-        title: "Our Clients",
+        title: "Commerce Platform",
         links: [
-          { label: "Institutional Investors", href: "/clients/institutional" },
-          { label: "Financial Advisors", href: "/clients/advisors" },
-          { label: "Family Offices", href: "/clients/family-offices" },
-          { label: "Insurance", href: "/clients/insurance" },
+          { label: "Overview", href: "/platform" },
+          { label: "Storefront & Catalog", href: "/platform/storefront" },
+          { label: "Checkout & APIs", href: "/platform/checkout" },
+          { label: "Merchant Tools", href: "/platform/merchant-tools" },
         ],
       },
       {
-        title: "The Firm",
+        title: "Core Capabilities",
         links: [
-          { label: "Overview", href: "/about" },
-          { label: "Our People", href: "/people" },
+          { label: "Globalization (Multi-Region)", href: "/platform/global" },
+          { label: "Compliance & Security", href: "/platform/security" },
+          { label: "Data & Analytics", href: "/platform/analytics" },
+        ],
+      },
+      {
+        title: "AI on Platform",
+        links: [
+          { label: "AI Search & Recommendations", href: "/platform/ai/recommendations" },
+          { label: "AI Merchandising", href: "/platform/ai/merchandising" },
+          { label: "AI Customer Service (Chat)", href: "/platform/ai/support" },
+          // Added for clarity
+          { label: "AI Personalization", href: "/platform/ai/personalization" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "solutions",
+    label: "SOLUTIONS",
+    columns: [
+      {
+        title: "Operations",
+        links: [
+          { label: "Logistics & Fulfillment", href: "/solutions/logistics" },
+          { label: "Inventory & OMS", href: "/solutions/oms" },
+          { label: "Returns & Reverse Logistics", href: "/solutions/returns" },
+        ],
+      },
+      {
+        title: "Monetization",
+        links: [
+          { label: "Payments", href: "/solutions/payments" },
+          { label: "Subscriptions", href: "/solutions/subscriptions" },
+          { label: "B2B Invoicing", href: "/solutions/b2b-invoicing" },
+        ],
+      },
+      {
+        title: "AI Solutions",
+        links: [
+          { label: "AI Demand Forecasting", href: "/solutions/ai/forecasting" },
+          { label: "AI Fraud Detection", href: "/solutions/ai/fraud" },
+          { label: "Dynamic Pricing (AI)", href: "/solutions/ai/pricing" },
+          // Added umbrella item
+          { label: "AI Commerce Tools", href: "/solutions/ai" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "industries",
+    label: "INDUSTRIES",
+    columns: [
+      {
+        title: "Where We Operate",
+        links: [
+          { label: "Retail & Brands", href: "/industries/retail" },
+          { label: "DTC & Subscriptions", href: "/industries/dtc" },
+          { label: "Marketplaces", href: "/industries/marketplaces" },
+          { label: "B2B Commerce", href: "/industries/b2b" },
+        ],
+      },
+      {
+        title: "Regions",
+        links: [
+          { label: "North America", href: "/regions/na" },
+          { label: "EMEA", href: "/regions/emea" },
+          { label: "APAC", href: "/regions/apac" },
+        ],
+      },
+      {
+        promo: true,
+        title: "Operate Globally, Locally",
+        text: "Multi-storefront, multi-currency, and localized checkout out of the box.",
+        cta: { label: "See how", href: "/platform/global" },
+        image: "/nav/promo.jpg", // ensure this exists under /public/nav/promo.jpg
+      },
+    ],
+  },
+  {
+    id: "resources",
+    label: "RESOURCES",
+    columns: [
+      {
+        title: "Learn",
+        links: [
+          { label: "Case Studies", href: "/resources/case-studies" },
+          { label: "Guides & Playbooks", href: "/resources/guides" },
+          { label: "Blog", href: "/blog" },
+        ],
+      },
+      {
+        title: "Build",
+        links: [
+          { label: "Developer Docs", href: "/docs" },
+          { label: "API Reference", href: "/docs/api" },
+          { label: "Changelog", href: "/docs/changelog" },
+        ],
+      },
+      {
+        title: "AI Resources",
+        links: [
+          { label: "AI Implementation Guide", href: "/resources/ai/implementation" },
+          { label: "Responsible AI & Safety", href: "/resources/ai/safety" },
+          { label: "Benchmarks & Results", href: "/resources/ai/benchmarks" },
+        ],
+      },
+    ],
+  },
+  {
+    id: "company",
+    label: "COMPANY",
+    columns: [
+      {
+        title: "About",
+        links: [
+          { label: "About Us", href: "/about" },
+          { label: "Leadership", href: "/people" },
           { label: "Careers", href: "/careers" },
         ],
       },
       {
-        title: "Our Impact",
+        title: "News & Investors",
         links: [
-          { label: "Sustainable Businesses", href: "/impact/sustainable" },
-          { label: "Career Pathways", href: "/impact/career-pathways" },
-          { label: "Foundation", href: "/impact/foundation" },
-          { label: "LaunchPad", href: "/impact/launchpad" },
-        ],
-      },
-    ],
-  },
-  {
-    id: "what",
-    label: "WHAT WE DO",
-    columns: [
-      {
-        title: "Businesses",
-        links: [
-          { label: "Private Equity", href: "/businesses/pe" },
-          { label: "Real Estate", href: "/businesses/re" },
-          { label: "Credit & Insurance", href: "/businesses/credit" },
-          { label: "Strategic Partners", href: "/businesses/sp" },
-          { label: "Tactical Opportunities", href: "/businesses/tac-opp" },
-          { label: "Infrastructure", href: "/businesses/infra" },
-          { label: "Life Sciences", href: "/businesses/life-sciences" },
-          { label: "Growth", href: "/businesses/growth" },
+          { label: "News & Insights", href: "/insights" },
+          { label: "Press", href: "/press" },
+          { label: "Investors", href: "/investors" },
         ],
       },
       {
-        title: "Transformation",
+        title: "Trust Center",
         links: [
-          { label: "Technology & Innovation", href: "/transformation/tech" },
-          { label: "Operating Team", href: "/transformation/operating-team" },
+          { label: "Security", href: "/platform/security" },
+          { label: "Compliance", href: "/platform/security#compliance" },
+          { label: "Status", href: "/status" },
         ],
-      },
-      {
-        title: "Products",
-        links: [
-          { label: "BREIT", href: "/products/breit" },
-          { label: "BCRED", href: "/products/bcred" },
-          { label: "BMACX", href: "/products/bmacx" },
-          { label: "View All", href: "/products" },
-        ],
-      },
-    ],
-  },
-
-  /* >>> SWAPPED ORDER: NEWS & INSIGHTS now before FINANCIAL ADVISORS <<< */
-  {
-    id: "news",
-    label: "NEWS & INSIGHTS",
-    columns: [
-      {
-        title: "News",
-        links: [
-          { label: "View All", href: "/news" },
-          { label: "Press Releases", href: "/press" },
-          { label: "In the News", href: "/in-the-news" },
-        ],
-      },
-      {
-        title: "Insights",
-        links: [
-          { label: "View All", href: "/insights" },
-          { label: "Market Views", href: "/insights/market-views" },
-          { label: "Pattern Recognition", href: "/insights/pattern-recognition" },
-        ],
-      },
-      {
-        title: "Essentials of Private Markets",
-        links: [
-          { label: "Overview", href: "/private-markets" },
-          { label: "Private Equity", href: "/private-markets/pe" },
-          { label: "Private Credit", href: "/private-markets/credit" },
-          { label: "Private Real Estate", href: "/private-markets/re" },
-          { label: "Private Infrastructure", href: "/private-markets/infra" },
-        ],
-      },
-      {
-        promo: true,
-        title: "Infrastructure of the Future",
-        text: "We spot trends early and invest at scale behind them.",
-        cta: { label: "Learn More", href: "/themes/infrastructure-of-the-future" },
-        // more reliable Unsplash URL pattern
-        image:
-          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
-      },
-    ],
-  },
-
-  /* FINANCIAL ADVISORS now follows NEWS & INSIGHTS */
-  {
-    id: "advisors",
-    label: "FINANCIAL ADVISORS",
-    columns: [
-      {
-        title: "Overview",
-        links: [
-          { label: "Why Green Sky", href: "/advisors" },
-          { label: "How It Works", href: "/advisors/how-it-works" },
-          { label: "FAQs", href: "/advisors/faq" },
-        ],
-      },
-      {
-        title: "Products",
-        links: [
-          { label: "BCRED", href: "/products/bcred" },
-          { label: "BMACX", href: "/products/bmacx" },
-          { label: "BREIT", href: "/products/breit" },
-          { label: "View All Products", href: "/products" },
-        ],
-      },
-      {
-        title: "Resources",
-        links: [
-          { label: "Advisor Resources", href: "/advisors/resources" },
-          { label: "Due Diligence", href: "/advisors/due-diligence" },
-          { label: "Literature", href: "/advisors/literature" },
-        ],
-      },
-      {
-        promo: true,
-        title: "Partner With Us",
-        text: "Tools, education, and access to private markets for your clients.",
-        cta: { label: "Get in Touch", href: "/contact" },
-        image:
-          "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80",
       },
     ],
   },
@@ -172,7 +176,7 @@ function useOnClickOutside<T extends HTMLElement>(
   ref: React.RefObject<T | null>,
   handler: (e: MouseEvent | TouchEvent) => void
 ) {
-  React.useEffect(() => {
+  useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {
       if (!ref.current || ref.current.contains(event.target as Node)) return;
       handler(event);
@@ -192,11 +196,7 @@ const isExternal = (href: string) =>
   href.startsWith("mailto:") ||
   href.startsWith("tel:");
 
-export default function StickyHeader({
-  compact = false,
-}: {
-  compact?: boolean;
-}): React.JSX.Element {
+export default function StickyHeader({ compact = false }: { compact?: boolean }): React.JSX.Element {
   const [openId, setOpenId] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef<HTMLDivElement | null>(null);
@@ -210,35 +210,33 @@ export default function StickyHeader({
   }, []);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenId(null);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpenId(null);
+    };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   const logoHeight = compact ? 26 : 28;
-  const logoWidth = Math.round(logoHeight * 4);
+  const logoWidth = Math.round(logoHeight * 4); // ~4:1
 
   return (
     <div
       ref={navRef}
       className={clsx(
         "fixed inset-x-0 top-0 z-50 transition-colors duration-200",
+        "border-b border-white/10 backdrop-blur",
         scrolled
-          ? "bg-white/90 text-zinc-900 border-b border-black/10 backdrop-blur-sm dark:bg-zinc-900/80 dark:text-zinc-100 dark:border-white/10"
-          : "bg-transparent text-zinc-900 dark:text-zinc-100"
+          ? "bg-zinc-900/90 shadow-[0_8px_20px_rgba(0,0,0,0.35)]"
+          : "bg-zinc-900/80"
       )}
     >
       <div className="mx-auto max-w-[1200px] px-4 lg:px-6">
-        <div
-          className={clsx(
-            "flex items-center",
-            compact ? "h-14 lg:h-[60px]" : "h-16 lg:h-[68px]"
-          )}
-        >
-          {/* Brand (swap by header background, not by theme) */}
+        <div className={clsx("flex items-center", compact ? "h-14 lg:h-[60px]" : "h-16 lg:h-[68px]")}>
+          {/* Brand — header always dark; swap logo per your preference */}
           <div className="shrink-0">
             <Link href="/" aria-label="Green Sky" className="inline-flex items-center">
-              {/* Light logo for dark/transparent header (over hero) */}
+              {/* Light logo at top */}
               <Image
                 src="/logo-light.svg"
                 alt="Green Sky"
@@ -247,7 +245,7 @@ export default function StickyHeader({
                 priority
                 className={clsx(scrolled ? "hidden" : "block")}
               />
-              {/* Dark logo once header turns light on scroll */}
+              {/* Dark logo after scroll */}
               <Image
                 src="/logo-dark.svg"
                 alt="Green Sky"
@@ -266,7 +264,7 @@ export default function StickyHeader({
                 <button
                   className={clsx(
                     "px-3 py-2 text-[12px] uppercase tracking-[0.12em] whitespace-nowrap relative group",
-                    "text-zinc-800 dark:text-zinc-200",
+                    "text-zinc-100",
                     "hover:text-accent focus:text-accent",
                     "after:absolute after:left-3 after:right-3 after:-bottom-[4px] after:h-[1px]",
                     openId === item.id
@@ -275,6 +273,7 @@ export default function StickyHeader({
                     "transition-colors duration-150 focus:outline-none"
                   )}
                   aria-expanded={openId === item.id}
+                  aria-haspopup="true"
                   aria-controls={`panel-${item.id}`}
                   onMouseEnter={() => setOpenId(item.id)}
                   onFocus={() => setOpenId(item.id)}
@@ -283,7 +282,7 @@ export default function StickyHeader({
                   {item.label}
                 </button>
 
-                {/* MEGA PANEL */}
+                {/* DARK MEGA PANEL */}
                 {openId === item.id && (
                   <div
                     id={`panel-${item.id}`}
@@ -293,12 +292,11 @@ export default function StickyHeader({
                       "fixed left-1/2 -translate-x-1/2 z-[60]",
                       "top-[72px] md:top-[76px]",
                       "w-[min(1120px,calc(100vw-2rem))] rounded-xl",
-                      "border border-black/10 bg-white/95 text-zinc-900",
-                      "dark:border-white/10 dark:bg-zinc-900/95 dark:text-zinc-100",
-                      "shadow-[0_30px_60px_rgba(0,0,0,0.45)] backdrop-blur supports-[backdrop-filter]:dark:bg-zinc-900/80"
+                      "border border-white/10 bg-zinc-900/95 text-white",
+                      "shadow-[0_30px_60px_rgba(0,0,0,0.65)] backdrop-blur"
                     )}
                   >
-                    <div className="h-px w-full bg-black/10 dark:bg-white/12" />
+                    <div className="h-px w-full bg-white/10" />
                     <div className="px-6 md:px-7 lg:px-8 py-7">
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
                         {item.columns.map((col, idx) =>
@@ -308,23 +306,18 @@ export default function StickyHeader({
                               href={col.cta?.href ?? "#"}
                               className={clsx(
                                 "rounded-lg overflow-hidden grid grid-cols-5 transition-colors",
-                                "hover:bg-black/[0.04] dark:hover:bg-white/[0.04]"
+                                "hover:bg-white/[0.04]"
                               )}
                               style={{
-                                backgroundColor: "color-mix(in oklab, var(--bg) 94%, transparent)",
-                                border:
-                                  "1px solid color-mix(in oklab, var(--text) 12%, transparent)",
+                                backgroundColor: "color-mix(in oklab, black 88%, transparent)",
+                                border: "1px solid rgba(255,255,255,0.12)",
                               }}
                             >
                               <div className="col-span-3 p-5">
-                                <h5 className="text-[15px] font-semibold leading-snug">
-                                  {col.title}
-                                </h5>
-                                <p className="mt-2 text-[13.5px] leading-relaxed text-zinc-700 dark:text-zinc-300">
-                                  {col.text}
-                                </p>
+                                <h5 className="text-[15px] font-semibold leading-snug">{col.title}</h5>
+                                <p className="mt-2 text-[13.5px] leading-relaxed text-zinc-300">{col.text}</p>
                                 <div className="mt-4 inline-flex items-center gap-2 text-[13.5px] text-accent">
-                                  <span>{col.cta?.label ?? "Learn More"}</span>
+                                  <span>{col.cta?.label ?? "Learn more"}</span>
                                   <span aria-hidden>→</span>
                                 </div>
                               </div>
@@ -335,7 +328,7 @@ export default function StickyHeader({
                                     alt=""
                                     fill
                                     sizes="(min-width: 768px) 33vw, 100vw"
-                                    className="object-cover"
+                                    className="object-cover opacity-90"
                                   />
                                 ) : null}
                               </div>
@@ -343,7 +336,7 @@ export default function StickyHeader({
                           ) : (
                             <div key={idx}>
                               {"title" in col && (
-                                <h4 className="text-[11px] font-medium mb-2.5 uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-400">
+                                <h4 className="text-[11px] font-medium mb-2.5 uppercase tracking-[0.14em] text-zinc-400">
                                   {col.title}
                                 </h4>
                               )}
@@ -353,11 +346,7 @@ export default function StickyHeader({
                                     {isExternal(link.href) ? (
                                       <a
                                         href={link.href}
-                                        className={clsx(
-                                          "text-[14px] leading-snug focus:outline-none",
-                                          "text-zinc-800 hover:text-accent focus:text-accent",
-                                          "dark:text-zinc-100 dark:hover:text-accent dark:focus:text-accent"
-                                        )}
+                                        className="text-[14px] leading-snug text-zinc-200 hover:text-accent focus:text-accent focus:outline-none"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                       >
@@ -366,11 +355,7 @@ export default function StickyHeader({
                                     ) : (
                                       <SafeLink
                                         href={link.href}
-                                        className={clsx(
-                                          "text-[14px] leading-snug focus:outline-none",
-                                          "text-zinc-800 hover:text-accent focus:text-accent",
-                                          "dark:text-zinc-100 dark:hover:text-accent dark:focus:text-accent"
-                                        )}
+                                        className="text-[14px] leading-snug text-zinc-200 hover:text-accent focus:text-accent"
                                       >
                                         {link.label}
                                       </SafeLink>
@@ -383,7 +368,7 @@ export default function StickyHeader({
                         )}
                       </div>
                     </div>
-                    <div className="h-px w-full bg-gradient-to-r from-transparent via-black/15 to-transparent dark:via-white/20" />
+                    <div className="h-px w-full bg-gradient-to-r from-transparent via-white/15 to-transparent" />
                   </div>
                 )}
               </div>
@@ -395,26 +380,20 @@ export default function StickyHeader({
 
           {/* Utility links */}
           <div className="hidden lg:flex items-center gap-4 mr-2">
-            <SafeLink
-              href="/shareholders"
-              className="text-sm whitespace-nowrap text-zinc-800 hover:text-accent dark:text-zinc-200 dark:hover:text-accent"
-            >
-              Shareholders
+            <SafeLink href="/pricing" className="text-sm whitespace-nowrap text-zinc-100 hover:text-accent">
+              Pricing
             </SafeLink>
-            <SafeLink
-              href="/lp-login"
-              className="text-sm whitespace-nowrap text-zinc-800 hover:text-accent dark:text-zinc-200 dark:hover:text-accent"
-            >
-              LP Login
+            <SafeLink href="/contact" className="text-sm whitespace-nowrap text-zinc-100 hover:text-accent">
+              Contact
             </SafeLink>
           </div>
 
-          {/* Actions (Search only) */}
+          {/* Actions */}
           <div className="hidden lg:flex items-center gap-2">
             <SearchButton />
           </div>
 
-          {/* Mobile actions (Search only) */}
+          {/* Mobile actions */}
           <div className="lg:hidden ml-auto flex items-center gap-2">
             <SearchButton />
           </div>

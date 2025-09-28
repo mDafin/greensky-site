@@ -1,17 +1,6 @@
 // data/firm.ts
 
-// ----- Types -----
-export type CTA = {
-  label: string;
-  href: string;
-  variant: "primary" | "secondary";
-};
-
-export type FirmIntro = {
-  title: string;
-  subtitle: string;
-  ctas: CTA[];
-};
+/* ========= Types ========= */
 
 export type Stat = {
   value: string;
@@ -22,12 +11,12 @@ export type Stat = {
 export type TabLink = { label: string; href: string };
 
 export type BusinessTab = {
-  id: string;
+  id: "platform" | "fulfillment" | "payments" | "growth";
   label: string;
   headline: string;
   body: string;
-  links?: TabLink[];
   image: { src: string; alt: string };
+  links?: TabLink[];
 };
 
 export type FeaturedInsight = {
@@ -37,88 +26,124 @@ export type FeaturedInsight = {
   href: string;
 };
 
-export type Logo = { src: string; alt: string };
-
-export type Footprint = {
-  regions: string[];
-  map: { src: string; alt: string };
-};
-
-// ----- Data -----
-export const FIRM_INTRO: FirmIntro = {
-  title: "The Firm",
-  subtitle:
-    "Delivering durable value for investors by building resilient businesses, transforming industries, and generating long-term impact.",
-  ctas: [
-    { label: "About Us", href: "/about", variant: "primary" },
-    { label: "Our People", href: "/people", variant: "secondary" },
-  ],
-};
+/* ========= Stats ========= */
 
 export const FIRM_STATS: Stat[] = [
-  { value: "$100B+", label: "Assets Managed", footnote: "Illustrative placeholder" },
-  { value: "250+", label: "Portfolio Companies" },
-  { value: "40+", label: "Countries" },
-  { value: "3,000+", label: "Employees" },
+  { value: "$25B+", label: "Gross Merchandise Volume" },
+  { value: "50+", label: "Countries Served" },
+  { value: "200M+", label: "Transactions Processed" },
+  { value: "99.99%", label: "Uptime Across Systems" },
 ];
+
+/* ========= Business Tabs (e-commerce pivot) ========= */
 
 export const BUSINESS_TABS: BusinessTab[] = [
   {
-    id: "pe",
-    label: "Private Equity",
-    headline: "Scale, modernization, and operational excellence",
+    id: "platform",
+    label: "Commerce Platform",
+    headline: "A Modern E-Commerce Infrastructure",
     body:
-      "We partner with exceptional teams to transform durable business models, leveraging technology and operating expertise to compound value over time.",
+      "Our digital platform empowers global brands and ambitious entrepreneurs to launch, scale, and refine their online storefronts with enterprise-grade reliability and integrated APIs.",
+    image: {
+      src: "/firm/platform.jpg",
+      alt: "Modern e-commerce platform interface on a laptop screen representing digital storefronts and APIs.",
+    },
     links: [
-      { label: "Strategy Overview", href: "/businesses/pe" },
-      { label: "Case Studies", href: "/insights" },
+      { label: "Learn more", href: "/products/platform" },
+      { label: "Platform docs", href: "/docs/platform" },
     ],
-    image: { src: "/firm/pe.jpg", alt: "Private equity operations" },
   },
   {
-    id: "re",
-    label: "Real Estate",
-    headline: "Cycle-aware investing across sectors and geographies",
+    id: "fulfillment",
+    label: "Logistics & Fulfillment",
+    headline: "Seamless Global Fulfillment",
     body:
-      "From logistics to residential, we target high-conviction themes supported by fundamentals, using disciplined risk management to protect and grow capital.",
+      "From same-day delivery in metropolitan hubs to cross-border distribution, our logistics network ensures goods move with precision, efficiency, and trust.",
+    image: {
+      src: "/firm/fulfillment.jpg",
+      alt: "Automated warehouse with stacked boxes and shelving, symbolizing global e-commerce logistics and fulfillment.",
+    },
     links: [
-      { label: "Strategy Overview", href: "/businesses/re" },
-      { label: "Selected Assets", href: "/portfolio" },
+      { label: "Learn more", href: "/products/fulfillment" },
+      { label: "Track shipments", href: "/support/shipping" },
     ],
-    image: { src: "/firm/re.jpg", alt: "Modern real estate assets" },
   },
   {
-    id: "credit",
-    label: "Private Credit",
-    headline: "Flexible capital solutions and defensive income",
+    id: "payments",
+    label: "Payments",
+    headline: "Trusted Digital Transactions",
     body:
-      "Across market cycles, we provide capital tailored to the needs of resilient issuers, with an emphasis on downside protection and attractive income.",
+      "We process millions of transactions daily with best-in-class fraud protection, multi-currency support, and instant settlement options tailored for global commerce.",
+    image: {
+      src: "/firm/payments.jpg",
+      alt: "Secure online payment with credit card and mobile device illustrating digital transactions and fraud protection.",
+    },
     links: [
-      { label: "Strategy Overview", href: "/businesses/credit" },
-      { label: "BCRED", href: "/products/bcred" },
+      { label: "Learn more", href: "/products/payments" },
+      { label: "View payment APIs", href: "/docs/payments" },
     ],
-    image: { src: "/firm/credit.jpg", alt: "Credit strategy" },
+  },
+  {
+    id: "growth",
+    label: "Growth Solutions",
+    headline: "Intelligence That Drives Growth",
+    body:
+      "Our AI-driven insights surface real-time consumer behavior and campaign performance, enabling merchants to maximize margins and expand market share.",
+    image: {
+      src: "/firm/growth.jpg",
+      alt: "Business analytics dashboard showing charts and graphs for e-commerce growth and marketing performance.",
+    },
+    links: [
+      { label: "Learn more", href: "/products/growth" },
+      { label: "Case studies", href: "/insights/case-studies" },
+    ],
   },
 ];
+
+/* ========= Featured Insight (for FeaturedDark) ========= */
 
 export const FEATURED_INSIGHT: FeaturedInsight = {
-  kicker: "Featured Insight",
-  title: "Pattern Recognition: Infrastructure of the Future",
+  kicker: "Insight",
+  title: "Building Global Commerce Resilience in 2026",
   summary:
-    "How secular trends in digital infrastructure, energy transition, and logistics are reshaping private markets.",
-  href: "/themes/infrastructure-of-the-future",
+    "How leading merchants are hardening supply chains, optimizing working capital, and using real-time risk signals to protect conversion—and expand internationally with confidence.",
+  href: "/insights/global-commerce-resilience-2026",
 };
 
-export const LOGOS: Logo[] = [
-  { src: "/logos/logo-1.svg", alt: "Logo 1" },
-  { src: "/logos/logo-2.svg", alt: "Logo 2" },
-  { src: "/logos/logo-3.svg", alt: "Logo 3" },
-  { src: "/logos/logo-4.svg", alt: "Logo 4" },
-  { src: "/logos/logo-5.svg", alt: "Logo 5" },
-  { src: "/logos/logo-6.svg", alt: "Logo 6" },
+/* ========= Footprint ========= */
+
+export const FOOTPRINT = {
+  regions: ["North America", "Europe", "Asia Pacific", "Latin America", "Middle East & Africa"],
+  map: {
+    src: "/firm/map.jpg",
+    alt: "Global world map visualization symbolizing international e-commerce footprint and cross-border operations.",
+  },
+};
+
+/* ========= Logos (placeholders; replace with /public/logos/*.svg when ready) ========= */
+
+const makeWordmark = (text: string) =>
+  `data:image/svg+xml;utf8,` +
+  encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' width='320' height='80'>
+      <rect width='100%' height='100%' fill='white'/>
+      <text x='50%' y='54%' font-family='system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif'
+            font-size='28' fill='#0a0a0a' text-anchor='middle' dominant-baseline='middle'
+            opacity='0.85'>${text}</text>
+    </svg>`
+  );
+
+export const LOGOS: { src: string; alt: string }[] = [
+  { src: makeWordmark("Apex Global"), alt: "Apex Global wordmark" },
+  { src: makeWordmark("Nimbus Brands"), alt: "Nimbus Brands wordmark" },
+  { src: makeWordmark("Vector Commerce"), alt: "Vector Commerce wordmark" },
+  { src: makeWordmark("Northline Distribution"), alt: "Northline Distribution wordmark" },
+  { src: makeWordmark("Orbit Labs"), alt: "Orbit Labs wordmark" },
+  { src: makeWordmark("Beacon Retail"), alt: "Beacon Retail wordmark" },
+  { src: makeWordmark("Monarch Supply"), alt: "Monarch Supply wordmark" },
+  { src: makeWordmark("Helix Payments"), alt: "Helix Payments wordmark" },
+  { src: makeWordmark("Atlas Growth"), alt: "Atlas Growth wordmark" },
+  { src: makeWordmark("Summit Apparel"), alt: "Summit Apparel wordmark" },
+  { src: makeWordmark("Quanta Home"), alt: "Quanta Home wordmark" },
+  { src: makeWordmark("Linea Beauty"), alt: "Linea Beauty wordmark" },
 ];
-
-export const FOOTPRINT: Footprint = {
-  regions: ["North America", "Europe", "Asia-Pacific", "Latin America", "Middle East & Africa"],
-  map: { src: "/firm/map.jpg", alt: "Global presence map" },
-};

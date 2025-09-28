@@ -1,37 +1,50 @@
 // components/people/PeopleGrid.tsx
-"use client";
-
-import React from "react";
-import PersonCard from "@/components/people/PersonCard";
+import Image from "next/image";
+import Link from "next/link";
 import { PEOPLE } from "@/data/people";
 
-export default function PeopleGrid({
-  variant = "light",
-}: {
-  variant?: "light" | "soft" | "dark";
-}): React.JSX.Element {
-  const isDark = variant === "dark";
-  const isSoft = variant === "soft";
+// Helper: extract correct src
+function pickSrc(src: string | { jpg?: string; webp?: string }): string {
+  if (typeof src === "string") return src;
+  return src.webp ?? src.jpg ?? "/people/placeholder.jpg";
+}
 
-  const sectionClass = isDark
-    ? "bg-zinc-900 text-white"
-    : isSoft
-    ? "bg-zinc-50 text-zinc-900"
-    : "bg-white text-zinc-900";
-
-  const subText = isDark ? "text-zinc-300" : isSoft ? "text-zinc-700" : "text-zinc-600";
-
+export default function PeopleGrid() {
   return (
-    <section aria-label="Our People" className={sectionClass}>
-      <div className="mx-auto max-w-[1200px] px-4 lg:px-6 py-12 lg:py-16">
-        <div className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-semibold">Our People</h2>
-          <p className={`mt-2 ${subText}`}>Meet leaders driving value across strategies.</p>
-        </div>
+    <section className="bg-white text-zinc-900">
+      <div className="mx-auto max-w-[1200px] px-4 lg:px-6 py-12 md:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {PEOPLE.map((p) => (
+            <Link
+              key={p.slug}
+              href={`/people/${p.slug}`}
+              className="group rounded-xl overflow-hidden border border-black/10 bg-white hover:bg-black/5 transition-colors"
+            >
+              {/* Headshot */}
+              <div className="relative aspect-[3/4] w-full bg-zinc-100">
+                <Image
+                  src={pickSrc(p.headshot.src480)}
+                  alt={p.headshot.alt}
+                  fill
+                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="object-cover"
+                />
+              </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PEOPLE.map((person) => (
-            <PersonCard key={person.slug} person={person} variant={variant} />
+              {/* Copy */}
+              <div className="p-4">
+                <div className="font-medium">{p.name}</div>
+                <div className="text-sm text-zinc-600">{p.role}</div>
+                {p.blurb && (
+                  <div className="mt-1 text-sm text-zinc-500 line-clamp-2">
+                    {p.blurb}
+                  </div>
+                )}
+                <div className="mt-2 text-sm font-medium text-emerald-600 group-hover:underline">
+                  View profile →
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
       </div>

@@ -1,14 +1,13 @@
-// app/page.tsx
-import ValueProps from "@/components/sections/ValueProps";
+// app/people/page.tsx
+import React from "react";
 import PeopleGrid from "@/components/people/PeopleGrid";
-import CallToAction from "@/components/CallToAction";
+import type { Metadata } from "next";
 
-export default function HomePage(): React.JSX.Element {
-  return (
-    <>
-      <ValueProps />
-      <PeopleGrid />
-      <CallToAction />
-    </>
-  );
+export const metadata: Metadata = {
+  title: "Leadership | Green Sky",
+  description: "Meet the executives guiding global commerce innovation at Green Sky.",
+};
+
+export default function PeopleIndexPage(): React.JSX.Element {
+  return <PeopleGrid />;
 }
