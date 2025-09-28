@@ -1,115 +1,52 @@
-/* app/globals.css */
-
 /* Tailwind v4 */
 @import "tailwindcss";
 
-/* ── Design tokens (dark default) ───────────────────────────── */
+/* ---------- Brand tokens ---------- */
 :root {
-  /* Surfaces & text */
-  --bg: #000000;
-  --panel: #141619;
-  --text: #e7e7e7;
-  --muted: #b8b8b8;
+  --accent: #57B6B2;        /* Pantone 7472 C */
+  --on-dark: #fafafa;       /* text on dark */
+  --on-dark-muted: #a1a1aa; /* muted on dark (~zinc-400) */
+  --on-light: #0b0b0b;      /* text on light */
+  --on-light-muted: #3f3f46;/* muted on light (~zinc-700) */
 
-  /* Brand (Pantone 7472C approximation) */
-  --accent: #57B6B2;
-  --accent-hover: #2bb5a9;
-  --accent-active: #239087;
-
-  /* Nav defaults (dark) */
-  --nav-fg: #e5e7eb;     /* zinc-200 */
-  --nav-fg-hover: #ffffff;
-  --nav-underline: rgba(255,255,255,0.7);
-
-  /* Footer defaults (dark) */
-  --footer-fg: #a1a1aa;  /* zinc-400 */
-  --footer-heading: #ffffff;
-  --footer-border: rgba(255,255,255,0.10);
+  --surface-dark: #0b0b0b;  /* page baseline */
+  --surface-dark-2: #111113;/* darker card */
+  --surface-light: #ffffff; /* light sections / cards */
+  --hairline-dark: rgba(255,255,255,0.12);
+  --hairline-light: rgba(0,0,0,0.10);
 }
 
-/* Light theme overrides */
-html.light {
-  --bg: #ffffff;
-  --panel: #f7f7f9;
-  --text: #111111;       /* strong base on light */
-  --muted: #3f3f46;      /* zinc-600 → readable */
+/* ---------- Utilities bound to tokens ---------- */
+.app-dark { background-color: var(--surface-dark); color: var(--on-dark); }
 
-  /* Gold accent for light mode (approx) */
-  --accent: #D4AF37;
-  --accent-hover: #c49c31;
-  --accent-active: #a88428;
+.text-accent { color: var(--accent); }
+.bg-accent { background-color: var(--accent); }
 
-  /* Nav (light) */
-  --nav-fg: #0f172a;         /* slate-900 */
-  --nav-fg-hover: #0b1220;   /* slightly darker on hover */
-  --nav-underline: rgba(15,23,42,0.55); /* slate-900 @~55% */
+.text-on-dark { color: var(--on-dark); }
+.text-on-dark-muted { color: var(--on-dark-muted); }
 
-  /* Footer (light) */
-  --footer-fg: #374151;      /* slate-700 */
-  --footer-heading: #0f172a; /* slate-900 */
-  --footer-border: rgba(2,6,23,0.08);  /* slate-950 ~8% */
+.text-on-light { color: var(--on-light); }
+.text-on-light-muted { color: var(--on-light-muted); }
+
+/* Section/card surfaces */
+.surface-dark {
+  background-color: var(--surface-dark);
+  color: var(--on-dark);
+}
+.surface-dark-2 {
+  background-color: var(--surface-dark-2);
+  color: var(--on-dark);
+  border: 1px solid var(--hairline-dark);
+}
+.surface-light {
+  background-color: var(--surface-light);
+  color: var(--on-light);
+  border: 1px solid var(--hairline-light);
 }
 
-/* Hint UA palette for form controls, etc. */
-html { color-scheme: dark; }
-html.light { color-scheme: light; }
+/* Hairline dividers */
+.hr-dark { height: 1px; background: var(--hairline-dark); }
+.hr-light { height: 1px; background: var(--hairline-light); }
 
-/* ── Global base ────────────────────────────────────────────── */
-html, body {
-  background-color: var(--bg);
-  color: var(--text);
-  margin: 0;
-  padding: 0;
-}
-
-/* Accessible focus outline */
-:focus-visible {
-  outline: 2px solid color-mix(in oklab, var(--accent) 80%, white 20%);
-  outline-offset: 2px;
-}
-
-/* ── Helper utilities (optional) ───────────────────────────── */
-/* Theme-aware text helpers if/when you need to force clarity */
-.t-fg-base   { color: var(--text) !important; }
-.t-fg-muted  { color: var(--muted) !important; }
-.t-fg-accent { color: var(--accent) !important; }
-
-/* Nav helpers (used by header) */
-.t-nav       { color: var(--nav-fg) !important; }
-.t-nav:hover,
-.t-nav:focus { color: var(--nav-fg-hover) !important; }
-
-/* Subtle card shadow used in the mega menu */
-.shadow-mega {
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
-}
-
-/* Hairline separators that look good on both themes */
-.hr-soft {
-  height: 1px;
-  width: 100%;
-  background: color-mix(in oklab, var(--text) 12%, transparent);
-}
-.hr-soft-gradient {
-  height: 1px;
-  width: 100%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    color-mix(in oklab, var(--text) 20%, transparent),
-    transparent
-  );
-}
-
-/* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.001ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Smooth scroll fallback */
-html { scroll-behavior: smooth; }
+/* Baseline readability */
+html, body { background-color: var(--surface-dark); color: var(--on-dark); }

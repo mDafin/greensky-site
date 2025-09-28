@@ -3,53 +3,31 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useTheme } from "next-themes";
-import { useEffect, useState } from "react";
 
 type Variant = "mark" | "word";
 
 type BrandProps = {
   height?: number;
   variant?: Variant;
-  /** When true, DARK theme shows the LIGHT logo, and LIGHT theme shows the DARK logo. */
-  invertInDark?: boolean;
-  /** Destination href — keep it simple with string paths (Next 15 is fine). */
   href?: string;
   className?: string;
+  /** When true (on dark backgrounds), show LIGHT logo; else show DARK logo */
+  onDark?: boolean;
 };
 
 export default function Brand({
-  height = 32,
+  height = 28,
   variant = "mark",
-  invertInDark = false,
   href = "/",
   className = "",
+  onDark = true, // header sits over dark hero initially
 }: BrandProps): React.JSX.Element {
-  const { theme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
-  // Maintain layout during hydration
   const width = Math.round(height * (variant === "word" ? 6 : 4));
-  if (!mounted) return <div style={{ height, width }} aria-hidden />;
-
-  // Base assets expected in /public
   const logos = {
     light: variant === "word" ? "/logo-light-word.svg" : "/logo-light.svg",
-    dark: variant === "word" ? "/logo-dark-word.svg" : "/logo-dark.svg",
+    dark:  variant === "word" ? "/logo-dark-word.svg"  : "/logo-dark.svg",
   };
-
-  // Normal (no invert): dark->dark, light->light
-  // Inverted:           dark->light, light->dark
-  const src =
-    theme === "dark"
-      ? invertInDark
-        ? logos.light
-        : logos.dark
-      : invertInDark
-      ? logos.dark
-      : logos.light;
+  const src = onDark ? logos.light : logos.dark;
 
   return (
     <Link href={href} aria-label="Green Sky" className={`inline-flex items-center ${className}`}>

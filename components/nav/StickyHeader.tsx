@@ -3,11 +3,10 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import clsx from "clsx";
 
-import Brand from "@/components/nav/Brand";
 import SearchButton from "@/components/nav/SearchButton";
-import ThemeToggle from "@/components/nav/ThemeToggle";
 import SafeLink from "@/components/nav/SafeLink";
 
 type LinkItem = { label: string; href: string };
@@ -83,6 +82,8 @@ const navData: { id: string; label: string; columns: Column[] }[] = [
       },
     ],
   },
+
+  /* >>> SWAPPED ORDER: NEWS & INSIGHTS now before FINANCIAL ADVISORS <<< */
   {
     id: "news",
     label: "NEWS & INSIGHTS",
@@ -118,8 +119,50 @@ const navData: { id: string; label: string; columns: Column[] }[] = [
         title: "Infrastructure of the Future",
         text: "We spot trends early and invest at scale behind them.",
         cta: { label: "Learn More", href: "/themes/infrastructure-of-the-future" },
+        // more reliable Unsplash URL pattern
         image:
-          "https://images.unsplash.com/photo-1509395176047-4a66953fd231?q=80&w=1200&auto=format&fit=crop",
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
+      },
+    ],
+  },
+
+  /* FINANCIAL ADVISORS now follows NEWS & INSIGHTS */
+  {
+    id: "advisors",
+    label: "FINANCIAL ADVISORS",
+    columns: [
+      {
+        title: "Overview",
+        links: [
+          { label: "Why Green Sky", href: "/advisors" },
+          { label: "How It Works", href: "/advisors/how-it-works" },
+          { label: "FAQs", href: "/advisors/faq" },
+        ],
+      },
+      {
+        title: "Products",
+        links: [
+          { label: "BCRED", href: "/products/bcred" },
+          { label: "BMACX", href: "/products/bmacx" },
+          { label: "BREIT", href: "/products/breit" },
+          { label: "View All Products", href: "/products" },
+        ],
+      },
+      {
+        title: "Resources",
+        links: [
+          { label: "Advisor Resources", href: "/advisors/resources" },
+          { label: "Due Diligence", href: "/advisors/due-diligence" },
+          { label: "Literature", href: "/advisors/literature" },
+        ],
+      },
+      {
+        promo: true,
+        title: "Partner With Us",
+        text: "Tools, education, and access to private markets for your clients.",
+        cta: { label: "Get in Touch", href: "/contact" },
+        image:
+          "https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?auto=format&fit=crop&w=1200&q=80",
       },
     ],
   },
@@ -129,7 +172,7 @@ function useOnClickOutside<T extends HTMLElement>(
   ref: React.RefObject<T | null>,
   handler: (e: MouseEvent | TouchEvent) => void
 ) {
-  useEffect(() => {
+  React.useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {
       if (!ref.current || ref.current.contains(event.target as Node)) return;
       handler(event);
@@ -149,7 +192,11 @@ const isExternal = (href: string) =>
   href.startsWith("mailto:") ||
   href.startsWith("tel:");
 
-export default function StickyHeader({ compact = false }: { compact?: boolean }): React.JSX.Element {
+export default function StickyHeader({
+  compact = false,
+}: {
+  compact?: boolean;
+}): React.JSX.Element {
   const [openId, setOpenId] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(false);
   const navRef = useRef<HTMLDivElement | null>(null);
@@ -163,12 +210,13 @@ export default function StickyHeader({ compact = false }: { compact?: boolean })
   }, []);
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpenId(null);
-    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenId(null);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
+
+  const logoHeight = compact ? 26 : 28;
+  const logoWidth = Math.round(logoHeight * 4);
 
   return (
     <div
@@ -181,29 +229,50 @@ export default function StickyHeader({ compact = false }: { compact?: boolean })
       )}
     >
       <div className="mx-auto max-w-[1200px] px-4 lg:px-6">
-        <div className={clsx("flex items-center", compact ? "h-14 lg:h-[60px]" : "h-16 lg:h-[68px]")}>
-          {/* Brand: show light logo on dark theme; dark logo on light */}
+        <div
+          className={clsx(
+            "flex items-center",
+            compact ? "h-14 lg:h-[60px]" : "h-16 lg:h-[68px]"
+          )}
+        >
+          {/* Brand (swap by header background, not by theme) */}
           <div className="shrink-0">
-            <Brand height={compact ? 26 : 28} invertInDark />
+            <Link href="/" aria-label="Green Sky" className="inline-flex items-center">
+              {/* Light logo for dark/transparent header (over hero) */}
+              <Image
+                src="/logo-light.svg"
+                alt="Green Sky"
+                width={logoWidth}
+                height={logoHeight}
+                priority
+                className={clsx(scrolled ? "hidden" : "block")}
+              />
+              {/* Dark logo once header turns light on scroll */}
+              <Image
+                src="/logo-dark.svg"
+                alt="Green Sky"
+                width={logoWidth}
+                height={logoHeight}
+                priority
+                className={clsx(scrolled ? "block" : "hidden")}
+              />
+            </Link>
           </div>
 
-          {/* Primary nav (stronger light-theme contrast) */}
-          <nav aria-label="Primary" className="ml-6 hidden lg:flex items-center gap-2">
+          {/* Primary nav */}
+          <nav aria-label="Primary" className="ml-6 hidden lg:flex items-center gap-1.5">
             {navData.map((item) => (
               <div key={item.id} className="relative">
                 <button
                   className={clsx(
-                    "px-3 py-2 text-[12.5px] uppercase tracking-[0.13em] whitespace-nowrap",
-                    // base colors per theme
-                    "text-zinc-800 hover:text-black focus:text-black",
-                    "dark:text-zinc-200 dark:hover:text-white dark:focus:text-white",
-                    "focus:outline-none",
-                    // underline-ish indicator
-                    "relative after:absolute after:left-3 after:right-3 after:-bottom-[3px] after:h-[1px]",
+                    "px-3 py-2 text-[12px] uppercase tracking-[0.12em] whitespace-nowrap relative group",
+                    "text-zinc-800 dark:text-zinc-200",
+                    "hover:text-accent focus:text-accent",
+                    "after:absolute after:left-3 after:right-3 after:-bottom-[4px] after:h-[1px]",
                     openId === item.id
-                      ? "after:bg-current"
-                      : "after:bg-transparent hover:after:bg-current/70 focus:after:bg-current/80",
-                    "transition-[color] duration-150"
+                      ? "after:bg-accent"
+                      : "after:bg-transparent group-hover:after:bg-accent/70 group-focus:after:bg-accent/80",
+                    "transition-colors duration-150 focus:outline-none"
                   )}
                   aria-expanded={openId === item.id}
                   aria-controls={`panel-${item.id}`}
@@ -214,7 +283,7 @@ export default function StickyHeader({ compact = false }: { compact?: boolean })
                   {item.label}
                 </button>
 
-                {/* MEGA PANEL — fixed & viewport-centered so it never overflows */}
+                {/* MEGA PANEL */}
                 {openId === item.id && (
                   <div
                     id={`panel-${item.id}`}
@@ -222,17 +291,16 @@ export default function StickyHeader({ compact = false }: { compact?: boolean })
                     role="region"
                     className={clsx(
                       "fixed left-1/2 -translate-x-1/2 z-[60]",
-                      "top-[72px] md:top-[76px]", // adjust if header height changes
+                      "top-[72px] md:top-[76px]",
                       "w-[min(1120px,calc(100vw-2rem))] rounded-xl",
-                      // light theme: pure white card w/ dark text; dark theme: zinc surface
                       "border border-black/10 bg-white/95 text-zinc-900",
                       "dark:border-white/10 dark:bg-zinc-900/95 dark:text-zinc-100",
                       "shadow-[0_30px_60px_rgba(0,0,0,0.45)] backdrop-blur supports-[backdrop-filter]:dark:bg-zinc-900/80"
                     )}
                   >
                     <div className="h-px w-full bg-black/10 dark:bg-white/12" />
-                    <div className="px-5 md:px-8 py-8">
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="px-6 md:px-7 lg:px-8 py-7">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
                         {item.columns.map((col, idx) =>
                           "promo" in col && col.promo ? (
                             <SafeLink
@@ -243,19 +311,20 @@ export default function StickyHeader({ compact = false }: { compact?: boolean })
                                 "hover:bg-black/[0.04] dark:hover:bg-white/[0.04]"
                               )}
                               style={{
-                                backgroundColor:
-                                  "color-mix(in oklab, var(--bg) 94%, transparent)",
+                                backgroundColor: "color-mix(in oklab, var(--bg) 94%, transparent)",
                                 border:
                                   "1px solid color-mix(in oklab, var(--text) 12%, transparent)",
                               }}
                             >
                               <div className="col-span-3 p-5">
-                                <h5 className="font-semibold">{col.title}</h5>
-                                <p className="mt-2 text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                                <h5 className="text-[15px] font-semibold leading-snug">
+                                  {col.title}
+                                </h5>
+                                <p className="mt-2 text-[13.5px] leading-relaxed text-zinc-700 dark:text-zinc-300">
                                   {col.text}
                                 </p>
-                                <div className="mt-4 inline-flex items-center gap-2 text-sm text-accent">
-                                  <span>Learn More</span>
+                                <div className="mt-4 inline-flex items-center gap-2 text-[13.5px] text-accent">
+                                  <span>{col.cta?.label ?? "Learn More"}</span>
                                   <span aria-hidden>→</span>
                                 </div>
                               </div>
@@ -274,20 +343,20 @@ export default function StickyHeader({ compact = false }: { compact?: boolean })
                           ) : (
                             <div key={idx}>
                               {"title" in col && (
-                                <h4 className="text-[11px] font-medium mb-3 uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-400">
+                                <h4 className="text-[11px] font-medium mb-2.5 uppercase tracking-[0.14em] text-zinc-600 dark:text-zinc-400">
                                   {col.title}
                                 </h4>
                               )}
-                              <ul className="space-y-[7px]">
+                              <ul className="space-y-2">
                                 {("links" in col ? col.links : []).map((link) => (
                                   <li key={link.label}>
                                     {isExternal(link.href) ? (
                                       <a
                                         href={link.href}
                                         className={clsx(
-                                          "text-[14px] leading-[1.35] focus:outline-none",
-                                          "text-zinc-800 hover:text-black focus:text-black",
-                                          "dark:text-zinc-100 dark:hover:text-white dark:focus:text-white"
+                                          "text-[14px] leading-snug focus:outline-none",
+                                          "text-zinc-800 hover:text-accent focus:text-accent",
+                                          "dark:text-zinc-100 dark:hover:text-accent dark:focus:text-accent"
                                         )}
                                         target="_blank"
                                         rel="noopener noreferrer"
@@ -298,9 +367,9 @@ export default function StickyHeader({ compact = false }: { compact?: boolean })
                                       <SafeLink
                                         href={link.href}
                                         className={clsx(
-                                          "text-[14px] leading-[1.35] focus:outline-none",
-                                          "text-zinc-800 hover:text-black focus:text-black",
-                                          "dark:text-zinc-100 dark:hover:text-white dark:focus:text-white"
+                                          "text-[14px] leading-snug focus:outline-none",
+                                          "text-zinc-800 hover:text-accent focus:text-accent",
+                                          "dark:text-zinc-100 dark:hover:text-accent dark:focus:text-accent"
                                         )}
                                       >
                                         {link.label}
@@ -321,35 +390,33 @@ export default function StickyHeader({ compact = false }: { compact?: boolean })
             ))}
           </nav>
 
-          {/* Spacer pushes right actions flush-right */}
+          {/* Spacer */}
           <div className="ml-auto" />
 
-          {/* Utility links (nowrap + theme-aware colors) */}
+          {/* Utility links */}
           <div className="hidden lg:flex items-center gap-4 mr-2">
             <SafeLink
               href="/shareholders"
-              className="text-sm whitespace-nowrap text-zinc-800 hover:text-black dark:text-zinc-200 dark:hover:text-white"
+              className="text-sm whitespace-nowrap text-zinc-800 hover:text-accent dark:text-zinc-200 dark:hover:text-accent"
             >
               Shareholders
             </SafeLink>
             <SafeLink
               href="/lp-login"
-              className="text-sm whitespace-nowrap text-zinc-800 hover:text-black dark:text-zinc-200 dark:hover:text-white"
+              className="text-sm whitespace-nowrap text-zinc-800 hover:text-accent dark:text-zinc-200 dark:hover:text-accent"
             >
               LP Login
             </SafeLink>
           </div>
 
-          {/* Actions on the far right */}
+          {/* Actions (Search only) */}
           <div className="hidden lg:flex items-center gap-2">
             <SearchButton />
-            <ThemeToggle />
           </div>
 
-          {/* Mobile actions */}
+          {/* Mobile actions (Search only) */}
           <div className="lg:hidden ml-auto flex items-center gap-2">
             <SearchButton />
-            <ThemeToggle />
           </div>
         </div>
       </div>

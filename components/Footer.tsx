@@ -1,108 +1,60 @@
-// components/Footer.tsx
+// components/sections/FooterDark.tsx
 "use client";
 
 import React from "react";
 import SafeLink from "@/components/nav/SafeLink";
-import ContactUsLink from "@/components/nav/ContactUsLink";
 
-export default function Footer(): React.JSX.Element {
+export default function FooterDark(): React.JSX.Element {
   return (
-    <footer
-      className="mt-24 border-t bg-zinc-950/90 text-[color:var(--footer-fg)]"
-      style={{ borderColor: "var(--footer-border)" }}
-    >
-      <div className="mx-auto max-w-[1200px] px-4 lg:px-6 py-12 lg:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        {/* Column 1: Brand */}
-        <div>
-          <h3 className="font-semibold text-lg" style={{ color: "var(--footer-heading)" }}>
-            Green Sky
-          </h3>
-          <p className="mt-2 text-sm">
-            Investing in what matters most.
-          </p>
-        </div>
+    <footer className="bg-zinc-950 text-zinc-100">
+      <div className="mx-auto max-w-[1200px] px-4 lg:px-6 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+          <div>
+            <div className="text-2xl font-semibold">Build with<br/>Green&nbsp;Sky</div>
+          </div>
 
-        {/* Column 2: Links */}
-        <div>
-          <h4 className="font-semibold text-sm uppercase tracking-wide mb-3" style={{ color: "var(--footer-heading)" }}>
-            The Firm
-          </h4>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <SafeLink href="/about" className="hover:text-[var(--accent)]">
-                About
-              </SafeLink>
-            </li>
-            <li>
-              <SafeLink href="/people" className="hover:text-[var(--accent)]">
-                People
-              </SafeLink>
-            </li>
-            <li>
-              <SafeLink href="/careers" className="hover:text-[var(--accent)]">
-                Careers
-              </SafeLink>
-            </li>
-          </ul>
-        </div>
+          <div>
+            <h4 className="text-sm font-medium uppercase tracking-[0.14em] text-zinc-400">Quick Links</h4>
+            <ul className="mt-3 space-y-2 text-sm">
+              <li><SafeLink href="/the-firm" className="hover:underline">The Firm</SafeLink></li>
+              <li><SafeLink href="/people" className="hover:underline">Our People</SafeLink></li>
+              <li><SafeLink href="/insights" className="hover:underline">Insights</SafeLink></li>
+              <li><SafeLink href="/careers" className="hover:underline">Careers</SafeLink></li>
+            </ul>
+          </div>
 
-        {/* Column 3: Products */}
-        <div>
-          <h4 className="font-semibold text-sm uppercase tracking-wide mb-3" style={{ color: "var(--footer-heading)" }}>
-            What We Do
-          </h4>
-          <ul className="space-y-2 text-sm">
-            <li>
-              <SafeLink href="/businesses/re" className="hover:text-[var(--accent)]">
-                Real Estate
-              </SafeLink>
-            </li>
-            <li>
-              <SafeLink href="/businesses/pe" className="hover:text-[var(--accent)]">
-                Private Equity
-              </SafeLink>
-            </li>
-            <li>
-              <SafeLink href="/private-markets/credit" className="hover:text-[var(--accent)]">
-                Private Credit
-              </SafeLink>
-            </li>
-            <li>
-              <SafeLink href="/transformation/tech" className="hover:text-[var(--accent)]">
-                Transformative Strategies
-              </SafeLink>
-            </li>
-          </ul>
-        </div>
+          <div>
+            <h4 className="text-sm font-medium uppercase tracking-[0.14em] text-zinc-400">Social</h4>
+            <ul className="mt-3 space-y-2 text-sm">
+              <li><a href="https://www.linkedin.com" className="hover:underline" target="_blank" rel="noreferrer">LinkedIn</a></li>
+              <li><a href="https://www.instagram.com" className="hover:underline" target="_blank" rel="noreferrer">Instagram</a></li>
+              <li><a href="https://x.com" className="hover:underline" target="_blank" rel="noreferrer">X (Twitter)</a></li>
+              <li><a href="https://facebook.com" className="hover:underline" target="_blank" rel="noreferrer">Facebook</a></li>
+            </ul>
+          </div>
 
-        {/* Column 4: Contact */}
-        <div>
-          <h4 className="font-semibold text-sm uppercase tracking-wide mb-3" style={{ color: "var(--footer-heading)" }}>
-            Connect
-          </h4>
-          <div className="space-y-2">
-            <ContactUsLink className="block w-fit rounded-md px-4 py-2 text-sm font-medium"
-              style={{ backgroundColor: "var(--accent)", color: "#0b0b0b" }}
-            />
-            <SafeLink
-              href="https://www.linkedin.com/"
-              className="block w-fit text-sm hover:text-[var(--accent)]"
-            >
-              LinkedIn →
-            </SafeLink>
+          <div>
+            <h4 className="text-sm font-medium uppercase tracking-[0.14em] text-zinc-400">Get in Touch</h4>
+            <ul className="mt-3 space-y-2 text-sm">
+              <li><SafeLink href="/contact" className="hover:underline">Contact Us</SafeLink></li>
+              <li><SafeLink href="/offices" className="hover:underline">Our Offices</SafeLink></li>
+              <li><SafeLink href="/lp-login" className="hover:underline">Limited Partner Login</SafeLink></li>
+            </ul>
           </div>
         </div>
-      </div>
 
-      {/* Bottom strip */}
-      <div
-        className="py-4 text-center text-xs"
-        style={{
-          color: "var(--footer-fg)",
-          borderTop: "1px solid var(--footer-border)",
-        }}
-      >
-        © {new Date().getFullYear()} Green Sky Management. All rights reserved.
+        <div className="mt-10 h-px w-full bg-white/15" />
+
+        <div className="mt-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-[13px] text-zinc-400">
+          <div>© {new Date().getFullYear()} Green Sky Management</div>
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <SafeLink href="/transparency" className="hover:underline">Transparency & Disclosure</SafeLink>
+            <SafeLink href="/legal" className="hover:underline">Legal</SafeLink>
+            <SafeLink href="/privacy" className="hover:underline">Privacy Center</SafeLink>
+            <SafeLink href="/security" className="hover:underline">Phishing & Fraud Awareness</SafeLink>
+            <SafeLink href="/do-not-sell" className="hover:underline">Do Not Sell/Share My Personal Info</SafeLink>
+          </div>
+        </div>
       </div>
     </footer>
   );
