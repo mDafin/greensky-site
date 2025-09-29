@@ -11,10 +11,10 @@ export type HeroVideoProps = {
 export default function HeroVideo({
   poster = "/hero-poster.jpg",
   tagline = "Powering Global E-Commerce",
-  subline = "Storefronts, AI logistics, secure payments, and growth at global scale.",
+  subline = "Empowering global commerce with intelligent technology, enterprise security, and growth without limits.",
 }: HeroVideoProps): React.JSX.Element {
   return (
-    <section id="hero" className="relative h-[100svh] w-full overflow-hidden">
+    <section id="hero" className="relative min-h-screen w-full overflow-hidden bg-black">
       {/* Video */}
       <video
         className="absolute inset-0 h-full w-full object-cover"
@@ -30,11 +30,11 @@ export default function HeroVideo({
         <source src="/hero.mp4" type="video/mp4" />
       </video>
 
-      {/* Overlay */}
+      {/* Overlay tint (keeps background dark if video doesn’t load) */}
       <div className="absolute inset-0 bg-black/50" />
 
       {/* Copy */}
-      <div className="relative z-10 flex h-full items-center justify-center text-center px-4">
+      <div className="relative z-10 flex min-h-screen items-center justify-center text-center px-4">
         <div className="max-w-3xl">
           <h1 className="text-3xl sm:text-5xl font-bold tracking-tight text-white drop-shadow-lg">
             {tagline}

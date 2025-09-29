@@ -1,4 +1,3 @@
-// components/people/PersonCard.tsx
 "use client";
 
 import Image from "next/image";
@@ -13,12 +12,12 @@ function pickSrc(
   size: "src480" | "src800" | "src1200" = "src800"
 ): string {
   const entry = headshot[size];
-  // Prefer WebP; fall back to JPG
-  return entry.webp || entry.jpg;
+  if (typeof entry === "string") return entry;
+  return entry?.webp || entry?.jpg || "";
 }
 
 export default function PersonCard({ person }: Props): React.JSX.Element {
-  const { slug, name, role, headshot, blurb } = person;
+  const { slug, name, role, headshot, blurb, socials } = person;
   const src = pickSrc(headshot, "src800");
 
   return (
@@ -37,16 +36,30 @@ export default function PersonCard({ person }: Props): React.JSX.Element {
         />
       </div>
       <div className="p-4">
-        <h3 className="text-white text-base font-semibold leading-tight group-hover:text-accent">
+        <h3 className="text-white text-base font-semibold leading-tight group-hover:text-[#57B6B2]">
           {name}
         </h3>
         <p className="text-zinc-300 text-sm mt-1">{role}</p>
         {blurb ? (
           <p className="text-zinc-400 text-sm mt-2 line-clamp-2">{blurb}</p>
         ) : null}
-        <span className="mt-3 inline-flex items-center gap-1 text-sm text-accent">
-          View profile <span aria-hidden>→</span>
-        </span>
+        <div className="mt-3 flex items-center gap-3">
+          <span className="inline-flex items-center gap-1 text-sm text-[#57B6B2]">
+            View profile <span aria-hidden>→</span>
+          </span>
+          {socials?.linkedin && (
+            <SafeLink
+              href={socials.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View ${name} on LinkedIn`}
+              className="text-zinc-400 hover:text-[#57B6B2]"
+              onClick={(e) => e.stopPropagation()} // prevent parent <Link> trigger
+            >
+              LinkedIn
+            </SafeLink>
+          )}
+        </div>
       </div>
     </SafeLink>
   );

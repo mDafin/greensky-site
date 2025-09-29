@@ -1,5 +1,7 @@
 // data/people.ts
 
+export type HeadshotSrc = string | { webp?: string; jpg?: string };
+
 export type Person = {
   slug: string;
   name: string;
@@ -7,12 +9,15 @@ export type Person = {
   location: string;
   bio: string;
   blurb?: string;
-  quote?: string;
   focus?: string[];
+  quote?: string;
+  socials?: {
+    linkedin?: string;
+  };
   headshot: {
-    src480: { jpg: string; webp: string };
-    src800: { jpg: string; webp: string };
-    src1200: { jpg: string; webp: string };
+    src480: HeadshotSrc;
+    src800: HeadshotSrc;
+    src1200: HeadshotSrc;
     alt: string;
   };
 };
@@ -30,10 +35,11 @@ He partners with merchants, carriers, and platform teams to close the gap betwee
     blurb: "Leverages 30 years at the Port of Long Beach/LA to build resilient global commerce networks.",
     quote: "Great commerce is a choreography—ports, platforms, and people moving in sync.",
     focus: ["Global logistics", "Port operations", "Cross-border", "Resilience"],
+    socials: { linkedin: "https://www.linkedin.com/in/alvin-bradley" },
     headshot: {
-      src480: { jpg: "/people/alvin-bradley-480.jpg", webp: "/people/alvin-bradley-480.webp" },
-      src800: { jpg: "/people/alvin-bradley-800.jpg", webp: "/people/alvin-bradley-800.webp" },
-      src1200: { jpg: "/people/alvin-bradley-1200.jpg", webp: "/people/alvin-bradley-1200.webp" },
+      src480: "/people/alvin-bradley-480.jpg",
+      src800: "/people/alvin-bradley-800.jpg",
+      src1200: "/people/alvin-bradley-1200.jpg",
       alt: "Portrait of Alvin Bradley",
     },
   },
@@ -48,10 +54,11 @@ operating across North America and Asia. Nikki leads Green Sky’s work in respo
     blurb: "Drives AI-powered logistics and predictive supply chain solutions for global merchants.",
     quote: "AI isn’t magic—it's disciplined ops, cleaner data, and measurable outcomes.",
     focus: ["Forecasting (ML)", "Network optimization", "Responsible AI", "Operational analytics"],
+    socials: { linkedin: "https://www.linkedin.com/in/nikki-b" },
     headshot: {
-      src480: { jpg: "/people/nikki-b-480.jpg", webp: "/people/nikki-b-480.webp" },
-      src800: { jpg: "/people/nikki-b-800.jpg", webp: "/people/nikki-b-800.webp" },
-      src1200: { jpg: "/people/nikki-b-1200.jpg", webp: "/people/nikki-b-1200.webp" },
+      src480: "/people/nikki-b-480.jpg",
+      src800: "/people/nikki-b-800.jpg", // if original was 640x640, this will still resolve fine
+      src1200: "/people/nikki-b-1200.jpg",
       alt: "Portrait of Nikki B",
     },
   },
@@ -66,10 +73,11 @@ security, compliance, or customer experience.`,
     blurb: "Leads next-gen payments, fraud prevention, and cross-border commerce strategies.",
     quote: "Frictionless doesn’t mean careless—trust is the real growth engine.",
     focus: ["Payments", "Fraud & risk", "Compliance", "Subscriptions"],
+    socials: { linkedin: "https://www.linkedin.com/in/kimberly-clark" },
     headshot: {
-      src480: { jpg: "/people/kimberly-clark-480.jpg", webp: "/people/kimberly-clark-480.webp" },
-      src800: { jpg: "/people/kimberly-clark-800.jpg", webp: "/people/kimberly-clark-800.webp" },
-      src1200: { jpg: "/people/kimberly-clark-1200.jpg", webp: "/people/kimberly-clark-1200.webp" },
+      src480: "/people/kimberly-clark-480.jpg",
+      src800: "/people/kimberly-clark-800.jpg",
+      src1200: "/people/kimberly-clark-1200.jpg",
       alt: "Portrait of Kimberly Clark",
     },
   },
@@ -84,10 +92,11 @@ latency reduction programs, and zero-downtime deployments at global scale.`,
     blurb: "Architects scalable storefronts and APIs powering global digital commerce.",
     quote: "Reliability is a feature—ship it like the brand depends on it.",
     focus: ["Platform architecture", "APIs", "Edge & CDN", "SRE"],
+    socials: { linkedin: "https://www.linkedin.com/in/marcus-lee" },
     headshot: {
-      src480: { jpg: "/people/marcus-lee-480.jpg", webp: "/people/marcus-lee-480.webp" },
-      src800: { jpg: "/people/marcus-lee-800.jpg", webp: "/people/marcus-lee-800.webp" },
-      src1200: { jpg: "/people/marcus-lee-1200.jpg", webp: "/people/marcus-lee-1200.webp" },
+      src480: "/people/marcus-lee-480.jpg",
+      src800: "/people/marcus-lee-800.jpg",
+      src1200: "/people/marcus-lee-1200.jpg",
       alt: "Portrait of Marcus Lee",
     },
   },
@@ -102,10 +111,11 @@ customer segments—partnering closely with product and sales.`,
     blurb: "Aligns growth, analytics, and merchant success to unlock revenue at scale.",
     quote: "The cleanest funnel is the one you keep improving.",
     focus: ["Growth strategy", "Lifecycle & retention", "Analytics", "Merchant success"],
+    socials: { linkedin: "https://www.linkedin.com/in/amina-yusuf" },
     headshot: {
-      src480: { jpg: "/people/amina-yusuf-480.jpg", webp: "/people/amina-yusuf-480.webp" },
-      src800: { jpg: "/people/amina-yusuf-800.jpg", webp: "/people/amina-yusuf-800.webp" },
-      src1200: { jpg: "/people/amina-yusuf-1200.jpg", webp: "/people/amina-yusuf-1200.webp" },
+      src480: "/people/amina-yusuf-480.jpg",
+      src800: "/people/amina-yusuf-800.jpg",
+      src1200: "/people/amina-yusuf-1200.jpg",
       alt: "Portrait of Amina Yusuf",
     },
   },

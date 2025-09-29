@@ -1,27 +1,35 @@
+// components/sections/FirmIntro.tsx
 "use client";
 
 import React from "react";
-import { FIRM_STATS, type Stat } from "../../data/firm";
+import SafeLink from "@/components/nav/SafeLink";
 
 export default function FirmIntro(): React.JSX.Element {
   return (
-    <section className="bg-white text-zinc-900">
-      <div className="mx-auto max-w-[1200px] px-4 lg:px-6 py-10 md:py-12">
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
-          {FIRM_STATS.map((s: Stat) => (
-            <div key={s.label} className="text-center">
-              <div className="text-2xl sm:text-3xl font-semibold">{s.value}</div>
-              <div className="mt-1 text-xs sm:text-sm text-zinc-600">{s.label}</div>
-              {s.footnote ? (
-                <div className="mt-1 text-[11px] text-zinc-500">{s.footnote}</div>
-              ) : null}
-            </div>
-          ))}
-        </div>
-
-        <p className="mt-8 text-[15px] sm:text-base text-zinc-700 max-w-3xl">
-          We serve institutions and individuals by building strong businesses that deliver lasting value.
+    <section id="the-firm" className="relative w-full bg-zinc-900 text-white py-20">
+      <div className="mx-auto max-w-[1200px] px-4 lg:px-6 text-center">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight">
+          The Firm
+        </h2>
+        <p className="mt-4 max-w-2xl mx-auto text-base sm:text-lg text-zinc-300 leading-relaxed">
+          Delivering durable value for investors by building resilient businesses,
+          transforming industries, and generating long-term impact.
         </p>
+
+        <div className="mt-8 flex justify-center gap-4">
+          <SafeLink
+            href="/about"
+            className="inline-flex items-center rounded-md px-5 py-2 text-sm font-medium bg-[var(--accent,#57B6B2)] text-black hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-white/30"
+          >
+            Learn More
+          </SafeLink>
+          <SafeLink
+            href="/people"
+            className="inline-flex items-center rounded-md px-5 py-2 text-sm font-medium border border-white/30 text-white hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-white/30"
+          >
+            Our People
+          </SafeLink>
+        </div>
       </div>
     </section>
   );
