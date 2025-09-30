@@ -1,30 +1,56 @@
-/* Tailwind v4 */
+/**
+ * ======================================================================
+ * File: app/globals.css
+ * Purpose: Tailwind v4 global styles + brand tokens and utilities
+ * Owner: Web | Status: Production
+ * ======================================================================
+ */
+
+/* Tailwind v4 core */
 @import "tailwindcss";
 
-/* ---------- Brand tokens ---------- */
+/* ---------- Brand tokens (single source of truth) ---------- */
 :root {
-  --accent: #57B6B2;        /* Pantone 7472 C */
-  --on-dark: #fafafa;       /* text on dark */
-  --on-dark-muted: #a1a1aa; /* muted on dark (~zinc-400) */
-  --on-light: #0b0b0b;      /* text on light */
-  --on-light-muted: #3f3f46;/* muted on light (~zinc-700) */
+  /* Accent palette (used by components and utilities) */
+  --accent: #57b6b2;        /* Pantone 7472 C */
+  --accent-hover: #49a7a3;
+  --accent-active: #3a8f8c;
 
-  --surface-dark: #0b0b0b;  /* page baseline */
-  --surface-dark-2: #111113;/* darker card */
-  --surface-light: #ffffff; /* light sections / cards */
+  /* Text colors on different surfaces */
+  --on-dark: #fafafa;        /* text on dark */
+  --on-dark-muted: #a1a1aa;  /* ~ zinc-400 */
+  --on-light: #0b0b0b;       /* text on light */
+  --on-light-muted: #3f3f46; /* ~ zinc-700 */
+
+  /* Surfaces + hairlines */
+  --surface-dark: #0b0b0b;   /* page baseline */
+  --surface-dark-2: #111113; /* darker card */
+  --surface-light: #ffffff;  /* light sections / cards */
   --hairline-dark: rgba(255,255,255,0.12);
   --hairline-light: rgba(0,0,0,0.10);
+
+  /* Optional aliases (if referenced in Tailwind config) */
+  --bg: var(--surface-dark);
+  --panel: var(--surface-dark-2);
+  --text: var(--on-dark);
+  --muted: var(--on-dark-muted);
+}
+
+/* ---------- Baseline readability ---------- */
+html, body {
+  background-color: var(--surface-dark);
+  color: var(--on-dark);
 }
 
 /* ---------- Utilities bound to tokens ---------- */
-.app-dark { background-color: var(--surface-dark); color: var(--on-dark); }
 
+/* Accent helpers */
 .text-accent { color: var(--accent); }
 .bg-accent { background-color: var(--accent); }
 
+/* Text tone helpers */
 .text-on-dark { color: var(--on-dark); }
 .text-on-dark-muted { color: var(--on-dark-muted); }
-
 .text-on-light { color: var(--on-light); }
 .text-on-light-muted { color: var(--on-light-muted); }
 
@@ -48,5 +74,8 @@
 .hr-dark { height: 1px; background: var(--hairline-dark); }
 .hr-light { height: 1px; background: var(--hairline-light); }
 
-/* Baseline readability */
-html, body { background-color: var(--surface-dark); color: var(--on-dark); }
+/* ---------- Accessibility niceties ---------- */
+::selection { background: color-mix(in oklab, var(--accent) 24%, transparent); }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

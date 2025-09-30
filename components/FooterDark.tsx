@@ -2,158 +2,245 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
+import Link from "next/link";
 import SafeLink from "@/components/nav/SafeLink";
+import Brand from "@/components/nav/Brand";
+
+/* ------------------------------ Config ------------------------------ */
+
+const YEAR = new Date().getFullYear();
+
+const COLS: Array<{
+  title: string;
+  links: Array<{ label: string; href: string; external?: boolean }>;
+}> = [
+  {
+    title: "The Firm",
+    links: [
+      { label: "Overview", href: "/about" },
+      { label: "Our People", href: "/people" },
+      { label: "Careers", href: "/careers" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  {
+    title: "What We Do",
+    links: [
+      { label: "Commerce Platform", href: "/platform" },
+      { label: "Logistics & AI Fulfillment", href: "/solutions/fulfillment" },
+      { label: "Payments", href: "/solutions/payments" },
+      { label: "Growth Solutions", href: "/solutions/growth" },
+    ],
+  },
+  {
+    title: "News & Insights",
+    links: [
+      { label: "Newsroom", href: "/news" },
+      { label: "Insights", href: "/insights" },
+      { label: "Press", href: "/press" },
+      { label: "Events", href: "/events" },
+    ],
+  },
+  {
+    title: "Investors",
+    links: [
+      { label: "Shareholders", href: "/shareholders" },
+      { label: "LP Login", href: "/lp-login" },
+      { label: "Disclosures", href: "/disclosures" },
+      { label: "Security", href: "/legal/security" },
+    ],
+  },
+];
+
+/* ------------------------------ Social Button ------------------------------ */
+
+type SocialLinkProps = {
+  href: string;
+  label: string;
+  children: React.ReactNode;
+  newTab?: boolean;
+};
+
+function SocialLink({
+  href,
+  label,
+  children,
+  newTab = true,
+}: SocialLinkProps): React.JSX.Element {
+  return (
+    <a
+      href={href}
+      aria-label={label}
+      title={label}
+      target={newTab ? "_blank" : undefined}
+      rel={newTab ? "noopener noreferrer" : undefined}
+      className="
+        group relative inline-flex h-10 w-10 items-center justify-center
+        rounded-full bg-white/10 text-white
+        ring-1 ring-inset ring-white/15
+        hover:bg-white hover:text-zinc-900
+        transition-colors duration-200
+        focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40
+      "
+    >
+      {/* Accent glow driven by --accent (from Tailwind theme) */}
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-full blur-lg opacity-20 group-hover:opacity-60 transition-opacity duration-500"
+        style={{
+          background:
+            "radial-gradient(circle, color-mix(in oklab, var(--accent) 85%, white 0%), transparent 70%)",
+        }}
+      />
+      <span className="relative inline-flex [&>svg]:h-5 [&>svg]:w-5">
+        {children}
+      </span>
+    </a>
+  );
+}
+
+/* ------------------------------ Component ------------------------------ */
 
 export default function FooterDark(): React.JSX.Element {
   return (
-    <footer className="bg-zinc-900 text-white">
-      {/* Top */}
-      <div className="mx-auto max-w-[1200px] px-4 lg:px-6 py-16 md:py-20 grid grid-cols-1 md:grid-cols-4 gap-12">
-        {/* Logo + tagline */}
-        <div className="md:col-span-1">
-          <div className="relative h-20 sm:h-24 md:h-28 w-64 sm:w-72 md:w-80">
-            <Image
-              src="/logo-light.svg"
-              alt="Green Sky Management"
-              fill
-              className="object-contain"
-              priority
-              sizes="(min-width: 1024px) 20rem, (min-width: 640px) 18rem, 16rem"
-            />
+    <footer
+      className="relative bg-zinc-950 text-zinc-200 border-t border-white/10"
+      role="contentinfo"
+    >
+      <div className="pointer-events-none absolute -top-6 left-0 right-0 h-6 bg-gradient-to-b from-black/0 to-black/35" />
+
+      <div className="mx-auto max-w-[1200px] px-4 lg:px-6 py-10 md:py-14">
+        {/* Brand row */}
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 pb-8 border-b border-white/10">
+          <div className="flex flex-col items-start gap-4">
+            <div className="opacity-90">
+              <Brand height={28} />
+            </div>
+
+            {/* Socials */}
+            <div className="flex items-center gap-3">
+              <SocialLink
+                href="https://linkedin.com/company/yourcompany"
+                label="LinkedIn"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7.5 0h3.8v2.2h.05c.53-1 1.84-2.2 3.8-2.2 4.06 0 4.8 2.67 4.8 6.14V24h-4v-7.1c0-1.7-.03-3.88-2.36-3.88-2.36 0-2.72 1.84-2.72 3.76V24h-4V8z" />
+                </svg>
+              </SocialLink>
+
+              <SocialLink href="https://x.com/yourhandle" label="X (Twitter)">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.244 2H21l-6.5 7.43L22.5 22H15.9l-5.07-6.54L4.9 22H2.14l7.09-8.1L1.5 2h6.76l4.57 6.08L18.24 2Z" />
+                </svg>
+              </SocialLink>
+
+              <SocialLink
+                href="https://youtube.com/@yourchannel"
+                label="YouTube"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.5 6.2a3.01 3.01 0 0 0-2.12-2.13C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.38.57A3.01 3.01 0 0 0 .5 6.2 31.8 31.8 0 0 0 0 12a31.8 31.8 0 0 0 .62 5.8 3.01 3.01 0 0 0 2.12 2.13C4.42 20.5 12 20.5 12 20.5s7.7 0 9.38-.57A3.01 3.01 0 0 0 23.5 17.8 31.8 31.8 0 0 0 24 12a31.8 31.8 0 0 0-.5-5.8ZM9.75 15.5v-7l6 3.5-6 3.5Z" />
+                </svg>
+              </SocialLink>
+            </div>
           </div>
-          <p className="mt-6 text-sm leading-relaxed text-zinc-400 max-w-xs">
-            Powering growth in global e-commerce through logistics, payments, and AI-driven solutions.
+
+          <p className="text-sm text-zinc-400 max-w-xl leading-relaxed">
+            Building the infrastructure for modern commerce — globally, securely,
+            and with conviction.
           </p>
         </div>
 
         {/* Link columns */}
-        <div className="md:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-10 text-sm">
-          <div>
-            <h4 className="font-semibold text-xs uppercase tracking-wide text-zinc-400">
-              Solutions
-            </h4>
-            <ul className="mt-4 space-y-2">
-              <li><SafeLink className="hover:text-[#57B6B2] hover:underline transition-colors" href="/commerce">Commerce Platform</SafeLink></li>
-              <li><SafeLink className="hover:text-[#57B6B2] hover:underline transition-colors" href="/logistics">Logistics &amp; Fulfillment</SafeLink></li>
-              <li><SafeLink className="hover:text-[#57B6B2] hover:underline transition-colors" href="/payments">Payments</SafeLink></li>
-              <li><SafeLink className="hover:text-[#57B6B2] hover:underline transition-colors" href="/growth">Growth Solutions</SafeLink></li>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-6 md:pt-10">
+          {COLS.map((col) => (
+            <nav key={col.title} aria-label={col.title}>
+              <div className="text-[11px] uppercase tracking-[0.14em] text-zinc-400">
+                {col.title}
+              </div>
+              <ul className="mt-3 space-y-2">
+                {col.links.map((l) => {
+                  const C = l.external ? SafeLink : Link;
+                  const props = l.external
+                    ? {
+                        href: l.href,
+                        target: "_blank",
+                        rel: "noopener noreferrer",
+                      }
+                    : { href: l.href, prefetch: false };
+                  return (
+                    <li key={l.label}>
+                      <C
+                        {...props}
+                        className="text-sm text-zinc-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-[4px] inline-flex items-center gap-1"
+                      >
+                        {l.label}
+                        <span aria-hidden className="opacity-60">›</span>
+                      </C>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+          ))}
+        </div>
+
+        {/* Legal + Language row */}
+        <div className="mt-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+          <div className="text-xs text-zinc-400">© {YEAR} Green Sky. All rights reserved.</div>
+          <div className="flex flex-col md:flex-row md:items-center gap-4">
+            <ul className="flex flex-wrap items-center gap-4 text-xs">
+              <li>
+                <Link
+                  href="/legal/privacy"
+                  prefetch={false}
+                  className="text-zinc-400 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-[4px]"
+                >
+                  Privacy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/legal/terms"
+                  prefetch={false}
+                  className="text-zinc-400 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-[4px]"
+                >
+                  Terms
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/disclosures"
+                  prefetch={false}
+                  className="text-zinc-400 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-[4px]"
+                >
+                  Disclosures
+                </Link>
+              </li>
+              <li className="pl-4 ml-2 border-l border-white/10">
+                <SafeLink
+                  href="mailto:security@yourdomain.com"
+                  className="text-zinc-300 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30 rounded-[4px]"
+                >
+                  Report a security issue
+                </SafeLink>
+              </li>
             </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-xs uppercase tracking-wide text-zinc-400">
-              Company
-            </h4>
-            <ul className="mt-4 space-y-2">
-              <li><SafeLink className="hover:text-[#57B6B2] hover:underline transition-colors" href="/about">About Us</SafeLink></li>
-              <li><SafeLink className="hover:text-[#57B6B2] hover:underline transition-colors" href="/careers">Careers</SafeLink></li>
-              <li><SafeLink className="hover:text-[#57B6B2] hover:underline transition-colors" href="/impact">Impact</SafeLink></li>
-              <li><SafeLink className="hover:text-[#57B6B2] hover:underline transition-colors" href="/contact">Contact</SafeLink></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-semibold text-xs uppercase tracking-wide text-zinc-400">
-              Resources
-            </h4>
-            <ul className="mt-4 space-y-2">
-              <li><SafeLink className="hover:text-[#57B6B2] hover:underline transition-colors" href="/insights">News &amp; Insights</SafeLink></li>
-              <li><SafeLink className="hover:text-[#57B6B2] hover:underline transition-colors" href="/support">Support</SafeLink></li>
-              <li><SafeLink className="hover:text-[#57B6B2] hover:underline transition-colors" href="/privacy">Privacy Policy</SafeLink></li>
-              <li><SafeLink className="hover:text-[#57B6B2] hover:underline transition-colors" href="/terms">Terms of Use</SafeLink></li>
-            </ul>
+
+            {/* Language selector */}
+            <select
+              aria-label="Switch language"
+              className="bg-zinc-900 text-xs text-zinc-300 border border-white/10 rounded px-2 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
+              defaultValue="en"
+            >
+              <option value="en">English</option>
+              <option value="es">Español</option>
+              <option value="fr">Français</option>
+              <option value="de">Deutsch</option>
+            </select>
           </div>
         </div>
       </div>
-
-      {/* Bottom */}
-      <div className="border-t border-white/10 mt-8">
-        <div className="mx-auto max-w-[1200px] px-4 lg:px-6 py-6 flex flex-col sm:flex-row items-center justify-between text-sm text-zinc-400 gap-4">
-          <div>© {new Date().getFullYear()} Green Sky Management. All rights reserved.</div>
-
-          {/* Social (teal glow; no extra deps) */}
-          <div className="flex gap-4">
-            <SafeLink
-              href="https://www.linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Follow us on LinkedIn"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-zinc-800 hover:bg-[#57B6B2] hover:text-zinc-900 transition-all duration-300 icon-glow"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  fill="currentColor"
-                  d="M19 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 
-                  2 0 0 0 2-2V5a2 2 0 0 0-2-2Zm-11.47 16H5.06V10.5h2.47V19ZM6.3 
-                  9.42A1.43 1.43 0 1 1 7.73 8a1.43 1.43 0 0 1-1.43 1.43ZM19 19h-2.47v-4.5c0-1.07-.02-2.45-1.49-2.45-1.5 
-                  0-1.73 1.17-1.73 2.37V19H10.8V10.5h2.37v1.16h.03a2.6 2.6 0 0 1 2.34-1.29c2.51 
-                  0 2.97 1.65 2.97 3.79V19Z"
-                />
-              </svg>
-            </SafeLink>
-
-            <SafeLink
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Follow us on Twitter"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-zinc-800 hover:bg-[#57B6B2] hover:text-zinc-900 transition-all duration-300 icon-glow"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  fill="currentColor"
-                  d="M21 5.5c-.7.3-1.5.5-2.2.6.8-.5 1.4-1.2 1.7-2.1-.8.5-1.7.9-2.6 1.1C16.9 4.3 15.8 4 14.7 4c-2.2 0-4 
-                  1.8-4 4 0 .3 0 .7.1 1-3.3-.2-6.3-1.8-8.3-4.2-.4.6-.6 1.3-.6 2.1 0 1.4.7 2.6 1.8 3.4-.6 0-1.2-.2-1.7-.5v.1c0 
-                  2 1.4 3.7 3.3 4.1-.3.1-.7.2-1 .2-.2 0-.5 0-.7-.1.5 1.7 2.1 2.9 3.9 3-1.5 1.2-3.4 1.9-5.4 1.9H3c1.9 1.2 4.2 
-                  1.9 6.6 1.9 8 0 12.4-6.6 12.4-12.4v-.6c.9-.7 1.5-1.3 2-2.1Z"
-                />
-              </svg>
-            </SafeLink>
-
-            <SafeLink
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Follow us on Instagram"
-              className="flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-zinc-800 hover:bg-[#57B6B2] hover:text-zinc-900 transition-all duration-300 icon-glow"
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true">
-                <path
-                  fill="currentColor"
-                  d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5Zm0 2a3 3 0 0 0-3 3v10a3 3 
-                  0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7Zm5 3.5a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11Zm0 2a3.5 3.5 0 1 0 0 
-                  7a3.5 3.5 0 0 0 0-7Zm5-1.75a1 1 0 1 1 0 2a1 1 0 0 1 0-2Z"
-                />
-              </svg>
-            </SafeLink>
-          </div>
-        </div>
-      </div>
-
-      {/* Teal glow animation */}
-      <style jsx>{`
-        @media (prefers-reduced-motion: no-preference) {
-          .icon-glow {
-            animation: badgePulse 6s ease-in-out infinite;
-          }
-          .icon-glow :global(svg) {
-            animation: pulseGlow 2.6s ease-in-out infinite;
-          }
-          @keyframes pulseGlow {
-            0% { filter: none; }
-            50% {
-              filter:
-                drop-shadow(0 0 6px rgba(87,182,178,0.55))
-                drop-shadow(0 0 12px rgba(87,182,178,0.35));
-            }
-            100% { filter: none; }
-          }
-          @keyframes badgePulse {
-            0% { box-shadow: 0 0 0 rgba(87,182,178,0); }
-            50% { box-shadow: 0 0 20px rgba(87,182,178,0.15); }
-            100% { box-shadow: 0 0 0 rgba(87,182,178,0); }
-          }
-        }
-      `}</style>
     </footer>
   );
 }
