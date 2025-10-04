@@ -2,7 +2,7 @@
 
 import React from "react";
 import FloatingContactUs from "@/components/nav/FloatingContactUs";
-import ContactUsDrawer from "@/components/overlays/ContactUsDrawer";
+import ContactUsDrawer from "@/components/media/HeroVideooverlays/ContactUsDrawer";
 
 export default function ContactHost(): React.JSX.Element {
   const [open, setOpen] = React.useState(false);

@@ -1,29 +1,21 @@
-// app/page.tsx
-import React from "react";
+import HeroSplit from "@/components/sections/HeroSplit";
 
-import HeroVideo from "@/components/HeroVideo";                  // keep your working hero
 import FirmSection from "@/components/sections/FirmSection";
 import EcommerceTicker from "@/components/sections/EcommerceTicker";
+import NewsInsightsLight from "@/components/sections/NewsInsightsLight";
 import PeopleGrid from "@/components/people/PeopleGrid";
+import TrustSection from "@/components/sections/TrustSection";
 import FooterDark from "@/components/FooterDark";
-import NewsInsightsLight from "@/components/sections/NewsInsightsLight"; // <-- new
 
-export default function HomePage(): React.JSX.Element {
+export default function HomePage() {
   return (
     <>
-      {/* 1) DARK — Hero (video) */}
-      <HeroVideo />
+      <HeroSplit />
 
-      {/* 2) LIGHT — Firm overview */}
       <FirmSection />
-
-      {/* 3) DARK — E-Commerce band */}
       <EcommerceTicker />
-
-      {/* 4) LIGHT — News & Insights */}
       <NewsInsightsLight />
 
-      {/* 5) LIGHT — Our People (gray wrap to separate visually) */}
       <section className="bg-zinc-50 text-zinc-900">
         <div className="mx-auto max-w-[1200px] px-4 lg:px-6 py-14 md:py-16">
           <div className="text-[11px] uppercase tracking-[0.14em] text-zinc-500 mb-2">
@@ -34,16 +26,8 @@ export default function HomePage(): React.JSX.Element {
         </div>
       </section>
 
-      {/* 6) DARK — Footer */}
+      <TrustSection />
       <FooterDark />
-
-      {/* Ticker keyframes used by EcommerceTicker */}
-      <style>{`
-        @keyframes homeTicker {
-          0% { transform: translate3d(0, 0, 0); }
-          100% { transform: translate3d(-50%, 0, 0); }
-        }
-      `}</style>
     </>
   );
 }

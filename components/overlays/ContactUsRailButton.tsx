@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import { openContactDrawer } from "@/components/overlays/contactBus";
+import { openContactDrawer } from "@/components/media/HeroVideooverlays/contactBus";
 
 export default function ContactUsRailButton() {
   return (

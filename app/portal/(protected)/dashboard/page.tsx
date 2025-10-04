@@ -1,5 +1,12 @@
 import React from "react";
 import { requireSession } from "@/lib/auth";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description: "Overview of your portal activity.",
+  robots: { index: false, follow: false },
+};
 
 export default async function PortalDashboardPage() {
   const session = await requireSession();

@@ -1,6 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Verifying — Green Sky Portal",
+  description: "Finalizing secure sign-in.",
+  robots: { index: false, follow: false },
+};
 
 export default function PortalCallbackPage({
   searchParams,
@@ -24,7 +31,7 @@ export default function PortalCallbackPage({
       .then(async (r) => {
         if (!r.ok) throw new Error(await r.text());
         setStatus("Signed in — redirecting…");
-        setTimeout(() => (window.location.href = "/portal"), 800);
+        setTimeout(() => (window.location.href = "/portal/dashboard"), 800);
       })
       .catch(() => setStatus("Token invalid or expired."));
   }, [searchParams]);

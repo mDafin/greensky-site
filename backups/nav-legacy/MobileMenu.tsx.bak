@@ -1,0 +1,119 @@
+"use client";
+
+import Link from "next/link";
+import { useEffect, useRef } from "react";
+
+export type NavItem = { href: string; label: string };
+
+type Props = {
+  open: boolean;
+  onClose: () => void;
+  items: NavItem[];
+  pathname: string | null;
+};
+
+export default function MobileMenu({ open, onClose, items, pathname }: Props) {
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // Close on ESC
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+
+  // Put focus into panel when opened (basic trap start)
+  useEffect(() => {
+    if (!open) return;
+    const first = panelRef.current?.querySelector<HTMLElement>(
+      "button,[href],input,select,textarea,[tabindex]:not([tabindex='-1'])"
+    );
+    first?.focus();
+  }, [open]);
+
+  return (
+    <div
+      className={[
+        "md:hidden fixed inset-0 z-50 transition",
+        open ? "pointer-events-auto" : "pointer-events-none",
+      ].join(" ")}
+      aria-hidden={!open}
+      role="dialog"
+      aria-modal="true"
+    >
+      {/* Backdrop */}
+      <div
+        className={[
+          "absolute inset-0 bg-black/50 transition-opacity",
+          open ? "opacity-100" : "opacity-0",
+        ].join(" ")}
+        onClick={onClose}
+      />
+
+      {/* Panel */}
+      <div
+        ref={panelRef}
+        className={[
+          "absolute right-0 top-0 h-full w-[86%] max-w-sm",
+          "bg-[color:var(--bg)] border-l border-[color:var(--hairline-dark)]",
+          "shadow-[0_24px_60px_rgba(0,0,0,.55)]",
+          "transition-transform duration-200 ease-out",
+          open ? "translate-x-0" : "translate-x-full",
+        ].join(" ")}
+      >
+        <div className="flex items-center justify-between px-4 py-3 border-b border-[color:var(--hairline-dark)]">
+          <span className="text-sm font-semibold tracking-[-0.01em]">Menu</span>
+          <button
+            onClick={onClose}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg hover:bg-[color:color-mix(in_oklab,var(--text)_8%,transparent)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--accent)]"
+            aria-label="Close menu"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M6 6l12 12M18 6l-12 12" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
+
+        <nav className="p-2" aria-label="Mobile">
+          {items.map((it) => {
+            const active = pathname === it.href;
+            return (
+              <Link
+                key={it.href}
+                href={it.href}
+                onClick={onClose}
+                className={[
+                  "block rounded-xl px-3.5 py-3 text-[0.98rem] transition-colors",
+                  active
+                    ? "bg-[color:color-mix(in_oklab,var(--text)_6%,transparent)] text-text"
+                    : "text-muted hover:text-text hover:bg-[color:color-mix(in_oklab,var(--text)_6%,transparent)]",
+                ].join(" ")}
+                aria-current={active ? "page" : undefined}
+              >
+                {it.label}
+              </Link>
+            );
+          })}
+
+          <div className="mt-2 border-t border-[color:var(--hairline-dark)] pt-2">
+            <Link
+              href="/login"
+              onClick={onClose}
+              className="block rounded-xl px-3.5 py-3 text-[0.98rem] text-muted hover:text-text hover:bg-[color:color-mix(in_oklab,var(--text)_6%,transparent)] transition-colors"
+            >
+              Sign in
+            </Link>
+            <Link
+              href="/request-access"
+              onClick={onClose}
+              className="mt-2 inline-flex h-10 items-center rounded-xl bg-accent px-3.5 text-[0.95rem] font-medium text-[var(--on-dark)] hover:bg-[var(--accent-hover)]"
+            >
+              Request access
+            </Link>
+          </div>
+        </nav>
+      </div>
+    </div>
+  );
+}
