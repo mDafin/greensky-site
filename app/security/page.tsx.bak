@@ -142,7 +142,7 @@ export default function SecurityPage() {
           <div className="md:col-span-4 space-y-4">
             <Card>
               <CardHeader>
-                <h3 class="text-lg font-semibold leading-tight">At a glance</h3>
+                <CardTitle>At a glance</CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="text-sm leading-6 text-neutral-700 list-disc pl-4">
@@ -159,7 +159,7 @@ export default function SecurityPage() {
 
             <Card>
               <CardHeader>
-                <h3 class="text-lg font-semibold leading-tight">Contact</h3>
+                <CardTitle>Contact</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-neutral-700">

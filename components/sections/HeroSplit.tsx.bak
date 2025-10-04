@@ -1,0 +1,123 @@
+// components/sections/HeroSplit.tsx
+"use client";
+
+import * as React from "react";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { Button, LinkButton } from "@/components/ui/Button";
+
+export default function HeroSplit(): React.JSX.Element {
+  return (
+    <section className="relative h-[100svh] w-full overflow-hidden">
+      <div className="grid h-full w-full md:grid-cols-12">
+        {/* LEFT: Video column */}
+        <div className="relative md:col-span-7">
+          <video
+            className="absolute inset-0 h-full w-full object-cover"
+            poster="/videos/hero-poster.jpg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="Decorative hero background video"
+          >
+            <source src="/videos/hero.webm" type="video/webm" />
+            <source src="/videos/hero-h265.mp4" type='video/mp4; codecs="hvc1"' />
+            <source src="/videos/hero-h264.mp4" type="video/mp4" />
+          </video>
+
+          {/* subtle tint for legibility */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/40 via-black/20 to-transparent" />
+
+          {/* headline over video */}
+          <div className="absolute bottom-10 left-6 right-6 md:left-8 md:right-10">
+            <motion.h1
+              className="h1 text-white drop-shadow-lg"
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.17, 0.67, 0.25, 1] }}
+            >
+              Powering Global E-Commerce
+            </motion.h1>
+            <motion.p
+              className="mt-2 max-w-xl text-zinc-200"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.6, ease: [0.17, 0.67, 0.25, 1] }}
+            >
+              Empowering global commerce with intelligent technology, enterprise
+              security, and growth without limits.
+            </motion.p>
+          </div>
+        </div>
+
+        {/* RIGHT: Content column */}
+        <div className="relative md:col-span-5 flex items-center bg-gradient-to-l from-ink/80 via-ink/60 to-transparent px-6">
+          <div className="mx-auto w-full max-w-md">
+            {/* Glass card content */}
+            <motion.div
+              className="glass rounded-2xl p-8 shadow-soft"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.17, 0.67, 0.25, 1] }}
+            >
+              <h2 className="h1 text-ink/90">
+                Quiet power.<br />Effortless clarity.
+              </h2>
+              <p className="mt-4 text-ink/70 subtle">
+                A Tahoe-inspired interface with Liquid Glass transparency,
+                tuned for focus and speed.
+              </p>
+
+              <motion.div
+                className="mt-6 flex gap-3"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1, duration: 0.5, ease: [0.17, 0.67, 0.25, 1] }}
+              >
+                {/* Primary CTA as real button */}
+                <Button
+                  size="lg"
+                  variant="solid"
+                  onClick={() => {
+                    const el = document.getElementById("learn-more");
+                    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  }}
+                >
+                  Learn more
+                </Button>
+
+                {/* Secondary CTA as link (glass pill) */}
+                <LinkButton href="#contact" size="lg" variant="glass">
+                  Contact
+                </LinkButton>
+              </motion.div>
+            </motion.div>
+
+            {/* Brand preview still (replaces logo) */}
+            <motion.div
+              className="mt-6 flex justify-end"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.55, ease: [0.17, 0.67, 0.25, 1] }}
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-soft w-[240px] md:w-[280px] glass">
+                <Image
+                  src="/videos/stills/hero-still-103.png"
+                  alt="Preview still from hero video"
+                  width={1200}
+                  height={675}
+                  priority
+                  className="card-preview w-full h-auto object-cover"
+                  sizes="(min-width: 1024px) 280px, 100vw"
+                />
+                <div className="card-overlay absolute inset-0" />
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
